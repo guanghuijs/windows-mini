@@ -43,6 +43,7 @@
 
 <style scoped lang="less">
   .task-bar {
+    z-index: calc(infinity);
     padding: 0 10px;
     position: fixed;
     width: 100%;
@@ -51,7 +52,7 @@
     inset: auto 0 0 0;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    color: var(--theme);
+    //color: var(--theme);
     i.win {
       font-size: 20px;
       cursor: pointer;

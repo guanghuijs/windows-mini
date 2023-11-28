@@ -2,8 +2,7 @@
   import { ref } from 'vue';
   import { Random } from 'mockjs';
   import { bgs } from '@/layout/desktop/assets/image/background';
-  import { TaskBar } from './components/TaskBar';
-  import { SystemMenu } from './components/SystemMenu';
+  import { TaskBar, SystemMenu, Window } from './components';
 
   const bg = ref(`url(${bgs[Random.integer(0, bgs.length - 1)]})`);
   const systemMenuVisible = ref<boolean>(false);
@@ -20,6 +19,7 @@
       @systemMenuToggle="systemMenuToggle"
     />
     <TaskBar @systemMenuToggle="systemMenuToggle" />
+    <Window></Window>
   </div>
 </template>
 
