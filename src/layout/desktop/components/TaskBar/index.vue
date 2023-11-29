@@ -2,11 +2,15 @@
   import { onMounted, onUnmounted, ref } from 'vue';
   import { useDateFormat, useNow } from '@vueuse/core';
   import { getBattery } from '@/layout/desktop/utils';
+  import { useDesktopStore, useDesktopStoreRefs } from '@/store/desktop';
 
   const battery = ref<any>(getBattery());
   const timer = ref<Interval | null>(null);
 
+  const { taskBarPosition } = useDesktopStoreRefs();
+  const { setTaskBarPosition } = useDesktopStore();
   const formatted = useDateFormat(useNow(), 'HH:mm:ss');
+
   onMounted(() => {
     battery.value = getBattery().then((Battery) => {
       battery.value = Battery;
@@ -25,7 +29,7 @@
 </script>
 
 <template>
-  <div class="task-bar flex-star">
+  <div class="task-bar flex-star" :class="`task-bar-${taskBarPosition}`">
     <i class="win iconfont icon-win" @click="$emit('systemMenuToggle')"></i>
     <div class="main"></div>
     <div class="right flex-star">
@@ -49,10 +53,9 @@
     width: 100%;
     height: 30px;
     background: rgba(255, 255, 255, 0.8);
-    inset: auto 0 0 0;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    //color: var(--theme);
+    transition: top 0.25s;
     i.win {
       font-size: 20px;
       cursor: pointer;
@@ -101,5 +104,11 @@
         color: var(--theme);
       }
     }
+  }
+  .task-bar-bottom {
+    inset: auto 0 0 0;
+  }
+  .task-bar-top {
+    inset: 0 0 auto 0;
   }
 </style>

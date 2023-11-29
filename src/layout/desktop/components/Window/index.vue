@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import { onMounted, ref, unref } from 'vue';
+  import { defineAsyncComponent, onMounted, ref, unref } from 'vue';
   import Vue3DraggableResizable from 'vue3-draggable-resizable';
-
   import { edgeDetection } from './helper';
-
+  import type { CreateWindowOptions } from '@/layout/desktop/components/typing';
   const windowRef = ref<HTMLElement>();
+  let topRef = ref<HTMLElement>();
+  const props = defineProps<{ options: CreateWindowOptions }>();
 
   const x = ref(150);
   const y = ref(100);
@@ -13,8 +14,17 @@
   const visible = ref(true);
   const isMax = ref(false);
 
+  const draggable = ref(true);
+
   const isIframeDisabled = ref(false);
-  onMounted(() => {});
+  onMounted(() => {
+    document.querySelector('.desktop')?.addEventListener('mouseover', (e) => {
+      topRef.value = e.target as HTMLElement;
+      draggable.value = !e.target!.classList.contains('gran-cancel');
+    });
+  });
+
+  const component = defineAsyncComponent(props.options.component as any);
 
   // 进入活跃状态
   const activatedHandle = () => {};
@@ -45,9 +55,7 @@
   };
 
   function edgeDetectionRef() {
-    const { minLeft, minTop, maxLeft, maxTop } = edgeDetection(
-      windowRef.value!
-    );
+    const { minLeft, minTop, maxLeft, maxTop } = edgeDetection(topRef.value!);
 
     if (unref(x) <= minLeft) {
       x.value = minLeft;
@@ -79,7 +87,7 @@
       v-model:y="y"
       :minW="500"
       :minH="400"
-      :draggable="true"
+      :draggable="draggable"
       :resizable="true"
       @activated="activatedHandle"
       @drag-start="dragStartHandle"
@@ -87,20 +95,23 @@
       @drag-end="dragEndHandle"
       @resize-start="resizeStartHandle"
       @resize-end="resizeEndHandle"
-      drag-cancel="'.drag-cancel'"
     >
-      <div class="top drag-cancel flex-between" @dblclick.self="isMax = !isMax">
-        <div>标题</div>
+      <div class="top drag-handle flex-between" @dblclick.self="isMax = !isMax">
+        <div class="gran-cancel">{{ options.meta.title }}</div>
         <div class="flex-star">
-          <div @click="visible = false">最小化</div>
-          <div @click="isMax = !isMax">最大化</div>
-          <div>关闭</div>
+          <div class="gran-cancel" @click="visible = false">最小化</div>
+          <div class="gran-cancel" @click="isMax = !isMax">最大化</div>
+          <div class="gran-cancel">关闭</div>
         </div>
       </div>
+      <template v-if="options.meta?.way === 'component'">
+        <Component :is="component"></Component>
+      </template>
       <iframe
-        @click="alert(11)"
+        v-else
         :class="isIframeDisabled ? 'disabled' : ''"
         ref="iframeRef"
+        :src="options.path"
       ></iframe>
     </Vue3DraggableResizable>
   </Transition>

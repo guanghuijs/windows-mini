@@ -1,4 +1,7 @@
 <script setup lang="ts">
+  import { useDesktopStoreRefs } from '@/store/desktop';
+  const { taskBarPosition } = useDesktopStoreRefs();
+
   withDefaults(
     defineProps<{
       show: boolean;
@@ -16,7 +19,11 @@
     @click.self="$emit('systemMenuToggle')"
   >
     <Transition>
-      <div v-show="show" class="system-menu"></div>
+      <div
+        v-show="show"
+        class="system-menu"
+        :class="`system-menu-${taskBarPosition}`"
+      ></div>
     </Transition>
   </div>
 </template>
@@ -37,6 +44,13 @@
     filter: blur(-20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: fixed;
+  }
+
+  .system-menu-top {
+    inset: 30px auto auto 0;
+  }
+
+  .system-menu-bottom {
     inset: auto auto 30px 0;
   }
 
@@ -48,6 +62,6 @@
   .v-enter-from,
   .v-leave-to {
     opacity: 0;
-    transform: translateY(30px);
+    transform: v-bind(systemMenuDirection);
   }
 </style>

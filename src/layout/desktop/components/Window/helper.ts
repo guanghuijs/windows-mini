@@ -1,3 +1,5 @@
+import { useDesktopStore } from '@/store/desktop';
+
 // 边缘检测
 export const edgeDetection = (
   target: any,
@@ -8,18 +10,16 @@ export const edgeDetection = (
   minTop: number;
   maxTop: number;
 } => {
-  const w = target.width;
-  const h = target.height;
+  const { taskBarPosition } = useDesktopStore();
+  const w = target.offsetWidth;
 
   const bodyW = document.body.offsetWidth;
   const bodyY = document.body.offsetHeight;
 
-  console.log(bodyW, bodyY + h - temp - 30);
-
   return {
     minLeft: -w + temp,
-    minTop: 0,
+    minTop: taskBarPosition === 'top' ? 30 : 0,
     maxLeft: bodyW - temp,
-    maxTop: bodyY - temp + 30,
+    maxTop: bodyY - temp + (taskBarPosition === 'top' ? 0 : -30),
   };
 };

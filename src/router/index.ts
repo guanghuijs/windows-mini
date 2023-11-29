@@ -1,5 +1,6 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordSortRaw } from '@/router/type';
+const modules = import.meta.globEager('./modules/**/*.ts');
 
 const routes: Array<RouteRecordSortRaw> = [
   {
@@ -8,8 +9,12 @@ const routes: Array<RouteRecordSortRaw> = [
   },
 ];
 
+Object.keys(modules).forEach((key) => {
+  routes.push((modules[key] as any).default);
+});
+
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 
