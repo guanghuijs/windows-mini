@@ -1,4 +1,4 @@
-import { createVNode, render } from 'vue';
+import { render, h } from 'vue';
 import type { CreateWindowOptions } from '@/layout/desktop/components/typing';
 // import { useDesktopStore } from '@/store/desktop';
 import Window from './index.vue';
@@ -8,8 +8,13 @@ export function createWindow(options: CreateWindowOptions) {
     window.open(options.path, '_blank');
     return;
   }
-  const box = document.createElement('div');
-  const instance = createVNode(Window, { options });
-  render(instance, box);
-  document.querySelector('.desktop')!.appendChild(box);
+  const winId = 'winid' + new Date().getTime();
+  const div = document.createElement('div');
+  div.setAttribute('winId', winId);
+  document.querySelector('.desktop')!.appendChild(div);
+  render(
+    h(Window, { options }),
+    document.querySelector(`div[winid=${winId}]`)!
+  );
+  div.classList.add('window-id');
 }

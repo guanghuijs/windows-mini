@@ -1,5 +1,5 @@
-import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
+import { defineStore, storeToRefs } from 'pinia';
 
 export const useDesktopStore = defineStore('desktop', () => {
   const taskBarPosition = ref<'top' | 'bottom'>('bottom');
@@ -12,13 +12,19 @@ export const useDesktopStore = defineStore('desktop', () => {
 
   const setTaskBarPosition = (position: 'top' | 'bottom') => {
     taskBarPosition.value = position;
-    console.log(systemMenuDirection.value);
+  };
+
+  const zIndex = ref(20);
+  const addZIndex = () => {
+    zIndex.value++;
   };
 
   return {
     taskBarPosition,
     setTaskBarPosition,
     systemMenuDirection,
+    zIndex,
+    addZIndex,
   };
 });
 

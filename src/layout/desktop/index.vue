@@ -6,7 +6,9 @@
   import { createWindow } from '@/layout/desktop/components/Window';
   import { menus } from '@/router/layout';
   import type { CreateWindowOptions } from '@/layout/desktop/components/typing';
+  import { useDesktopStoreRefs } from '@/store/desktop';
 
+  const { taskBarPosition } = useDesktopStoreRefs();
   const bg = ref(`url(${bgs[Random.integer(0, bgs.length - 1)]})`);
   const systemMenuVisible = ref<boolean>(false);
 
@@ -26,8 +28,10 @@
       @systemMenuToggle="systemMenuToggle"
     />
     <TaskBar @systemMenuToggle="systemMenuToggle" />
-    <!--    <Window></Window>-->
-    <div class="desktop-cont">
+    <div
+      class="desktop-cont"
+      :class="`desktop-cont-taskbar-${taskBarPosition}`"
+    >
       <div
         class="item"
         v-for="item in menus"
@@ -55,5 +59,13 @@
         user-select: none;
       }
     }
+  }
+
+  .desktop-cont-taskbar-top {
+    padding-top: 30px;
+  }
+
+  .desktop-cont-taskbar-bottom {
+    padding-bottom: 30px;
   }
 </style>

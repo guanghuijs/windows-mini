@@ -5,10 +5,10 @@
 </script>
 
 <template>
-  <div class="window-content">
+  <div class="content">
     <div>menu</div>
     <div>
-      <div @click="alert('11111')">任务栏位置{{ taskBarPosition }}</div>
+      <div>任务栏位置{{ taskBarPosition }}</div>
       <div @click="setTaskBarPosition('top')">top</div>
       <div @click="setTaskBarPosition('bottom')">bottom</div>
     </div>
@@ -16,8 +16,8 @@
 </template>
 
 <style scoped lang="less">
-  .window-content {
-    height: calc(100% - 50px);
+  .content {
+    height: 100%;
     background: #f2f2f2;
   }
 </style>

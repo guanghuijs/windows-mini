@@ -1,11 +1,16 @@
 <script setup lang="ts">
   import { defineAsyncComponent, onMounted, ref, unref } from 'vue';
   import Vue3DraggableResizable from 'vue3-draggable-resizable';
-  import { edgeDetection } from './helper';
+  import { edgeDetection, getParentTarget } from './helper';
   import type { CreateWindowOptions } from '@/layout/desktop/components/typing';
+  import { useDesktopStoreRefs, useDesktopStore } from '@/store/desktop';
+
+  const { addZIndex, zIndex } = useDesktopStore();
+  const { taskBarPosition } = useDesktopStoreRefs();
+
   const windowRef = ref<HTMLElement>();
   let topRef = ref<HTMLElement>();
-  const props = defineProps<{ options: CreateWindowOptions }>();
+  const props = defineProps<{ options?: CreateWindowOptions }>();
 
   const x = ref(150);
   const y = ref(100);
@@ -24,7 +29,9 @@
     });
   });
 
-  const component = defineAsyncComponent(props.options.component as any);
+  const component = props?.options
+    ? defineAsyncComponent(props?.options?.component as any)
+    : '';
 
   // 进入活跃状态
   const activatedHandle = () => {};
@@ -73,6 +80,16 @@
       y.value = maxTop;
     }
   }
+
+  const clickFn = (e: MouseEvent) => {
+    const dom = getParentTarget(e.target as HTMLElement);
+    addZIndex();
+    dom.style.zIndex = zIndex;
+  };
+
+  const dbClickFn = () => {
+    isMax.value = !isMax.value;
+  };
 </script>
 
 <template>
@@ -81,7 +98,7 @@
       v-show="visible"
       ref="windowRef"
       class="viewport"
-      :class="isMax ? 'max' : ''"
+      :class="isMax ? `max ${taskBarPosition}` : ''"
       v-model:active="active"
       v-model:x="x"
       v-model:y="y"
@@ -96,23 +113,31 @@
       @resize-start="resizeStartHandle"
       @resize-end="resizeEndHandle"
     >
-      <div class="top drag-handle flex-between" @dblclick.self="isMax = !isMax">
-        <div class="gran-cancel">{{ options.meta.title }}</div>
+      <div
+        class="top drag-handle flex-between"
+        @click="clickFn"
+        @dblclick.self="dbClickFn"
+      >
+        <div class="gran-cancel">
+          {{ options?.meta?.title }}
+        </div>
         <div class="flex-star">
           <div class="gran-cancel" @click="visible = false">最小化</div>
           <div class="gran-cancel" @click="isMax = !isMax">最大化</div>
           <div class="gran-cancel">关闭</div>
         </div>
       </div>
-      <template v-if="options.meta?.way === 'component'">
-        <Component :is="component"></Component>
-      </template>
-      <iframe
-        v-else
-        :class="isIframeDisabled ? 'disabled' : ''"
-        ref="iframeRef"
-        :src="options.path"
-      ></iframe>
+      <div class="window-content">
+        <template v-if="options?.meta?.way === 'component'">
+          <Component :is="component"></Component>
+        </template>
+        <iframe
+          v-else
+          :class="isIframeDisabled ? 'disabled' : ''"
+          ref="iframeRef"
+          :src="options?.path"
+        ></iframe>
+      </div>
     </Vue3DraggableResizable>
   </Transition>
 </template>
@@ -143,19 +168,34 @@
       pointer-events: none;
       opacity: 0.9;
     }
+
+    .window-content {
+      height: calc(100% - 40px);
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
   }
 
   .max {
     width: 100vw !important;
-    height: 100vh !important;
-    left: 0 !important;
-    top: 0 !important;
+    height: calc(100vh - 30px) !important;
     .top {
       border-radius: initial;
     }
     iframe {
       border-radius: initial;
     }
+  }
+
+  .max.bottom {
+    left: 0 !important;
+    top: 0 !important;
+  }
+
+  .max.top {
+    left: 0 !important;
+    bottom: 0 !important;
+    top: initial !important;
   }
 
   .v-enter-active,

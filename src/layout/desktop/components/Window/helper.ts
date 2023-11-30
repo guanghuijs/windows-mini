@@ -23,3 +23,11 @@ export const edgeDetection = (
     maxTop: bodyY - temp + (taskBarPosition === 'top' ? 0 : -30),
   };
 };
+
+export function getParentTarget(target?: HTMLElement | null) {
+  if (target?.parentNode?.classList.contains('window-id')) {
+    return target.parentNode;
+  } else {
+    return getParentTarget(target?.parentNode as HTMLElement);
+  }
+}
