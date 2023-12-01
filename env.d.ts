@@ -1,4 +1,4 @@
 /// <reference types="vite/client" />
 
-type Interval = NodeJS.Timer | number;
-type Timeout = NodeJS.Timeout | number;
+declare type Interval = NodeJS.Timer | number;
+// declare type Timeout = NodeJS.Timeout | number;

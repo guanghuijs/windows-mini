@@ -1,0 +1,1 @@
+export { bgs } from './background';

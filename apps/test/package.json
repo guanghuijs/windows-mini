@@ -10,6 +10,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@packages/layout": "workspace:*",
+    "@packages/utils": "workspace:*",
+    "@packages/static": "workspace:*",
     "@types/lodash-es": "^4.17.7",
     "@vueuse/core": "^10.2.1",
     "echarts": "^5.4.3",

@@ -1,149 +1,66 @@
 lockfileVersion: 5.3
 
-importers:
+specifiers:
+  '@rushstack/eslint-patch': ^1.1.4
+  '@types/lodash-es': ^4.17.7
+  '@types/mockjs': ^1.0.7
+  '@types/node': ^16.11.56
+  '@vitejs/plugin-vue': ^3.0.3
+  '@vitejs/plugin-vue-jsx': ^2.0.1
+  '@vue/eslint-config-prettier': ^7.0.0
+  '@vue/eslint-config-typescript': ^11.0.0
+  '@vue/tsconfig': ^0.1.3
+  '@vueuse/core': ^10.2.1
+  echarts: ^5.4.3
+  eslint: ^8.22.0
+  eslint-plugin-vue: ^9.3.0
+  less: ^4.1.3
+  lodash-es: ^4.17.21
+  mockjs: ^1.1.0
+  naive-ui: ^2.35.0
+  npm-run-all: ^4.1.5
+  pinia: ^2.0.21
+  prettier: ^2.7.1
+  typescript: ~4.7.4
+  vite: ^3.0.9
+  vite-plugin-pages: ^0.31.0
+  vue: ^3.3.1
+  vue-drag-resize: ^1.5.4
+  vue-router: ^4.1.5
+  vue-tsc: ^1.0.12
+  vue3-draggable-resizable: ^1.6.5
 
-  .:
-    specifiers:
-      '@rushstack/eslint-patch': ^1.1.4
-      '@types/lodash-es': ^4.17.7
-      '@types/mockjs': ^1.0.7
-      '@types/node': ^16.11.56
-      '@vitejs/plugin-vue': ^3.0.3
-      '@vitejs/plugin-vue-jsx': ^2.0.1
-      '@vue/eslint-config-prettier': ^7.0.0
-      '@vue/eslint-config-typescript': ^11.0.0
-      '@vue/tsconfig': ^0.1.3
-      '@vueuse/core': ^10.2.1
-      echarts: ^5.4.3
-      eslint: ^8.22.0
-      eslint-plugin-vue: ^9.3.0
-      less: ^4.1.3
-      lodash-es: ^4.17.21
-      mockjs: ^1.1.0
-      naive-ui: ^2.35.0
-      npm-run-all: ^4.1.5
-      pinia: ^2.0.21
-      prettier: ^2.7.1
-      typescript: ~4.7.4
-      vite: ^3.0.9
-      vite-plugin-pages: ^0.31.0
-      vue: ^3.3.1
-      vue-drag-resize: ^1.5.4
-      vue-router: ^4.1.5
-      vue-tsc: ^1.0.12
-      vue3-draggable-resizable: ^1.6.5
-    dependencies:
-      '@types/lodash-es': 4.17.7
-      '@vueuse/core': 10.2.1_vue@3.3.4
-      echarts: 5.4.3
-      less: 4.1.3
-      lodash-es: 4.17.21
-      mockjs: 1.1.0
-      pinia: 2.1.4_typescript@4.7.4+vue@3.3.4
-      vite-plugin-pages: 0.31.0_vite@3.2.7
-      vue: 3.3.4
-      vue-drag-resize: 1.5.4
-      vue3-draggable-resizable: 1.6.5
-    devDependencies:
-      '@rushstack/eslint-patch': 1.3.2
-      '@types/mockjs': 1.0.7
-      '@types/node': 16.18.38
-      '@vitejs/plugin-vue': 3.2.0_vite@3.2.7+vue@3.3.4
-      '@vitejs/plugin-vue-jsx': 2.1.1_vite@3.2.7+vue@3.3.4
-      '@vue/eslint-config-prettier': 7.1.0_eslint@8.44.0+prettier@2.8.8
-      '@vue/eslint-config-typescript': 11.0.3_4bed45e19c0b5bd29c65f9e6871897f0
-      '@vue/tsconfig': 0.1.3_@types+node@16.18.38
-      eslint: 8.44.0
-      eslint-plugin-vue: 9.15.1_eslint@8.44.0
-      naive-ui: 2.35.0_vue@3.3.4
-      npm-run-all: 4.1.5
-      prettier: 2.8.8
-      typescript: 4.7.4
-      vite: 3.2.7_@types+node@16.18.38+less@4.1.3
-      vue-router: 4.2.3_vue@3.3.4
-      vue-tsc: 1.8.19_typescript@4.7.4
+dependencies:
+  '@types/lodash-es': 4.17.7
+  '@vueuse/core': 10.2.1_vue@3.3.4
+  echarts: 5.4.3
+  less: 4.1.3
+  lodash-es: 4.17.21
+  mockjs: 1.1.0
+  pinia: 2.1.4_typescript@4.7.4+vue@3.3.4
+  vite-plugin-pages: 0.31.0_vite@3.2.7
+  vue: 3.3.4
+  vue-drag-resize: 1.5.4
+  vue3-draggable-resizable: 1.6.5
 
-  apps/test:
-    specifiers:
-      '@packages/layout': workspace:*
-      '@packages/static': workspace:*
-      '@packages/utils': workspace:*
-      '@rushstack/eslint-patch': ^1.1.4
-      '@types/lodash-es': ^4.17.7
-      '@types/mockjs': ^1.0.7
-      '@types/node': ^16.11.56
-      '@vitejs/plugin-vue': ^3.0.3
-      '@vitejs/plugin-vue-jsx': ^2.0.1
-      '@vue/eslint-config-prettier': ^7.0.0
-      '@vue/eslint-config-typescript': ^11.0.0
-      '@vue/tsconfig': ^0.1.3
-      '@vueuse/core': ^10.2.1
-      echarts: ^5.4.3
-      eslint: ^8.22.0
-      eslint-plugin-vue: ^9.3.0
-      less: ^4.1.3
-      lodash-es: ^4.17.21
-      mockjs: ^1.1.0
-      naive-ui: ^2.35.0
-      npm-run-all: ^4.1.5
-      pinia: ^2.0.21
-      prettier: ^2.7.1
-      typescript: ~4.7.4
-      vite: ^3.0.9
-      vite-plugin-pages: ^0.31.0
-      vue: ^3.3.1
-      vue-drag-resize: ^1.5.4
-      vue-router: ^4.1.5
-      vue-tsc: ^1.0.12
-      vue3-draggable-resizable: ^1.6.5
-    dependencies:
-      '@packages/layout': link:../../packages/layout
-      '@packages/static': link:../../packages/static
-      '@packages/utils': link:../../packages/utils
-      '@types/lodash-es': 4.17.12
-      '@vueuse/core': 10.2.1_vue@3.3.4
-      echarts: 5.4.3
-      less: 4.1.3
-      lodash-es: 4.17.21
-      mockjs: 1.1.0
-      pinia: 2.1.4_typescript@4.7.4+vue@3.3.4
-      vite-plugin-pages: 0.31.0_vite@3.2.7
-      vue: 3.3.4
-      vue-drag-resize: 1.5.4
-      vue3-draggable-resizable: 1.6.5
-    devDependencies:
-      '@rushstack/eslint-patch': 1.3.2
-      '@types/mockjs': 1.0.7
-      '@types/node': 16.18.38
-      '@vitejs/plugin-vue': 3.2.0_vite@3.2.7+vue@3.3.4
-      '@vitejs/plugin-vue-jsx': 2.1.1_vite@3.2.7+vue@3.3.4
-      '@vue/eslint-config-prettier': 7.1.0_eslint@8.44.0+prettier@2.8.8
-      '@vue/eslint-config-typescript': 11.0.3_4bed45e19c0b5bd29c65f9e6871897f0
-      '@vue/tsconfig': 0.1.3_@types+node@16.18.38
-      eslint: 8.44.0
-      eslint-plugin-vue: 9.15.1_eslint@8.44.0
-      naive-ui: 2.35.0_vue@3.3.4
-      npm-run-all: 4.1.5
-      prettier: 2.8.8
-      typescript: 4.7.4
-      vite: 3.2.7_@types+node@16.18.38+less@4.1.3
-      vue-router: 4.2.3_vue@3.3.4
-      vue-tsc: 1.8.19_typescript@4.7.4
-
-  packages/layout:
-    specifiers:
-      '@packages/static': workspace:*
-    dependencies:
-      '@packages/static': link:../static
-
-  packages/static:
-    specifiers:
-      '@packages/layout': workspace:*
-    dependencies:
-      '@packages/layout': link:../layout
-
-  packages/utils:
-    specifiers: {}
+devDependencies:
+  '@rushstack/eslint-patch': 1.3.2
+  '@types/mockjs': 1.0.7
+  '@types/node': 16.18.38
+  '@vitejs/plugin-vue': 3.2.0_vite@3.2.7+vue@3.3.4
+  '@vitejs/plugin-vue-jsx': 2.1.1_vite@3.2.7+vue@3.3.4
+  '@vue/eslint-config-prettier': 7.1.0_eslint@8.44.0+prettier@2.8.8
+  '@vue/eslint-config-typescript': 11.0.3_4bed45e19c0b5bd29c65f9e6871897f0
+  '@vue/tsconfig': 0.1.3_@types+node@16.18.38
+  eslint: 8.44.0
+  eslint-plugin-vue: 9.15.1_eslint@8.44.0
+  naive-ui: 2.35.0_vue@3.3.4
+  npm-run-all: 4.1.5
+  prettier: 2.8.8
+  typescript: 4.7.4
+  vite: 3.2.7_@types+node@16.18.38+less@4.1.3
+  vue-router: 4.2.3_vue@3.3.4
+  vue-tsc: 1.8.19_typescript@4.7.4
 
 packages:
 
@@ -638,6 +555,7 @@ packages:
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
     dependencies:
       '@types/lodash': 4.14.202
+    dev: true
 
   /@types/lodash-es/4.17.7:
     resolution: {integrity: sha512-z0ptr6UI10VlU6l5MYhGwS4mC8DZyYer2mCoyysZtSF7p26zOX8UpbrV0YpNYLGS8K4PUFIyEr62IMFFjveSiQ==}
@@ -651,6 +569,7 @@ packages:
 
   /@types/lodash/4.14.202:
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+    dev: true
 
   /@types/mockjs/1.0.7:
     resolution: {integrity: sha512-OCxXz6hEaJOVpRwuJMiVY5a6LtJcih+br9gwB/Q8ooOBikvk5FpBQ31OlNimXo3EqKha1Z7PFBni+q9m+8NCWg==}
