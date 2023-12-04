@@ -1,9 +1,10 @@
 <script setup lang="ts">
-  import { defineAsyncComponent, onMounted, ref, unref, watch } from 'vue';
+  import { computed, onMounted, ref, unref, watch } from 'vue';
   import Vue3DraggableResizable from 'vue3-draggable-resizable';
   import { edgeDetection, getParentTarget } from './helper';
   import type { CreateWindowOptions } from '../typing';
   import { useDesktopStoreRefs, useDesktopStore } from '../../store';
+  import Main from './Main.vue';
 
   const { zIndex, taskBarPosition } = useDesktopStoreRefs();
   const { addZIndex } = useDesktopStore();
@@ -15,6 +16,7 @@
   const windowRef = ref<HTMLElement>();
   let topRef = ref<HTMLElement>();
   const props = defineProps<{ options?: CreateWindowOptions }>();
+  console.log(props.options);
 
   const x = ref(150);
   const y = ref(100);
@@ -25,6 +27,10 @@
 
   const draggable = ref(true);
 
+  const resizeable = computed<boolean>(() => {
+    return !unref(isMax);
+  });
+
   const isIframeDisabled = ref(false);
   onMounted(() => {
     document.querySelector('.desktop')?.addEventListener('mouseover', (e) => {
@@ -32,10 +38,6 @@
       draggable.value = e.target!.classList.contains('drag-handle');
     });
   });
-
-  const component = props?.options
-    ? defineAsyncComponent(props?.options?.component as any)
-    : '';
 
   // 进入活跃状态
   const activatedHandle = () => {};
@@ -87,7 +89,6 @@
 
   const clickFn = (e: MouseEvent) => {
     const dom = getParentTarget(e.target as HTMLElement);
-    console.log(zIndex.value);
     dom.style.zIndex = zIndex.value;
     addZIndex();
   };
@@ -110,7 +111,7 @@
       :minW="500"
       :minH="400"
       :draggable="draggable"
-      :resizable="true"
+      :resizable="resizeable"
       @activated="activatedHandle"
       @drag-start="dragStartHandle"
       @dragging="draggingHandle"
@@ -121,7 +122,7 @@
     >
       <div class="top drag-handle flex-between" @dblclick.self="dbClickFn">
         <div class="title flex-star">
-          {{ options?.meta?.title }}{{ draggable }}
+          {{ options?.meta?.title }}
         </div>
         <div class="winOpt flex-star">
           <div class="drag-cancel" @click="visible = false">
@@ -137,7 +138,7 @@
       </div>
       <div class="window-content drag-cancel">
         <template v-if="options?.meta?.way === 'component'">
-          <Component :is="component"></Component>
+          <Main :options="options"></Main>
         </template>
         <iframe
           v-else
@@ -168,6 +169,7 @@
       user-select: none;
       font-size: 15px;
       overflow: hidden;
+      border-bottom: 1px solid #eee;
       .title {
         padding-left: 10px;
       }
