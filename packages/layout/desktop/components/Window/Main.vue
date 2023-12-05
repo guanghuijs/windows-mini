@@ -1,17 +1,18 @@
 <script setup lang="ts">
   import { NMenu, NLayout, NLayoutSider, MenuOption } from 'naive-ui';
-  import { computed, ref, defineAsyncComponent } from 'vue';
+  import { computed, ref } from 'vue';
   import { CreateWindowOptions } from '../typing';
   import type { RouteRecordRaw } from 'vue-router';
   const props = defineProps<{ options: CreateWindowOptions }>();
 
-  const activeKey = ref(props.options.children[0].path);
+  const activeKey = ref<string>(props.options.children[0].path);
 
   const component = computed(() => {
     const current = props.options.children?.find(
       (r) => r.path === activeKey.value
     );
-    return defineAsyncComponent(current.component as any);
+    console.log(current.component);
+    return current.component;
   });
 
   const collapsed = ref(false);
@@ -51,7 +52,9 @@
       </n-layout-sider>
       <n-layout>
         <div class="right-container">
-          <component :is="component" />
+          <keep-alive>
+            <component :is="component" />
+          </keep-alive>
         </div>
       </n-layout>
     </n-layout>

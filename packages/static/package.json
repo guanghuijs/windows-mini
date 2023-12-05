@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@packages/layout": "workspace:*"
+    "@packages/layout": "workspace:*",
+    "@packages/utils": "workspace:*"
   }
 }

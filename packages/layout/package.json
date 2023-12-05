@@ -13,6 +13,7 @@
   "files": ["env.d.ts"],
   "include": ["env.d.ts"],
   "dependencies": {
-    "@packages/static": "workspace:*"
+    "@packages/static": "workspace:*",
+    "@packages/utils": "workspace:*"
   }
 }
