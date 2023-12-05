@@ -1,34 +1,29 @@
 <script setup lang="ts">
-  import { NMenu, NLayout, NLayoutSider, MenuOption } from 'naive-ui';
-  import { computed, ref, defineAsyncComponent } from 'vue';
-  import type { RouteRecordRaw } from 'vue-router';
-  import type { CreateWindowOptions } from '../desktop/components/typing';
-  import { useRoute } from 'vue-router';
+  import {
+    NMenu,
+    NLayout,
+    NLayoutSider,
+    MenuOption,
+    NLayoutHeader,
+  } from 'naive-ui';
+  import { computed, ref } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { mapRouter } from '@packages/utils';
+  const [{ meta, fullPath }, router] = [useRoute(), useRouter()];
 
-  const menus = useRoute().meta?.menus;
-  console.log(useRoute());
-
-  const activeKey = computed<string>(() => {
-    return menus && menus[0].path;
-  });
-
-  const component = computed(() => {
-    // return defineAsyncComponent(props.options.children[0].component);
-  });
-
+  const activeKey = ref(meta?.menus[0].path as string);
   const collapsed = ref(false);
 
   const menuOptions: MenuOption[] = computed(() => {
-    return menus.map((router: RouteRecordRaw) => {
-      return {
-        key: router.path,
-        label: router.meta?.title,
-      };
-    });
+    return mapRouter(
+      meta?.menus,
+      fullPath.substring(0, fullPath.lastIndexOf('/'))
+    );
   });
 
-  const handleUpdateValue = (e) => {
-    console.log(e);
+  const handleUpdateValue = (_, item: MenuOption) => {
+    router.push(item.key);
+    activeKey.value = item.key;
   };
 </script>
 
@@ -36,7 +31,7 @@
   <n-layout class="window-container">
     <n-layout has-sider>
       <n-layout-sider
-        :width="240"
+        :width="200"
         show-trigger
         :collapsed="collapsed"
         @collapse="collapsed = true"
@@ -44,6 +39,7 @@
         collapse-mode="width"
         bordered
       >
+        <div @click="router.push('/desktop')">哈哈</div>
         <n-menu
           :options="menuOptions"
           :inverted="false"
@@ -52,6 +48,11 @@
         />
       </n-layout-sider>
       <n-layout>
+        <n-layout-header bordered>
+          <div class="header flex-star">
+            <n-menu mode="horizontal" :options="menuOptions" />
+          </div>
+        </n-layout-header>
         <div class="right-container">
           <router-view></router-view>
         </div>
