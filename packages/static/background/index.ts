@@ -1,4 +1,4 @@
-export const modules: any = import.meta.globEager('./*.webp');
+export const modules: any = import.meta.globEager('./src/*.webp');
 const bgs: any[] = [];
 console.log(modules);
 Object.keys(modules).forEach((key) => {

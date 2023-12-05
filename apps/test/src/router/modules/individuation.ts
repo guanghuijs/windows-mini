@@ -5,12 +5,16 @@ import {
   Echarts,
   BMap,
 } from '@packages/static/modules/individuation';
+import { renderIcon } from '@packages/utils';
+
+import { MdSubway, MdStar, MdPhotos, MdRainy } from '@vicons/ionicons4';
 
 const individuationRouter: CreateWindowOptions = {
   path: 'individuation',
   meta: {
     title: '个性化',
     way: 'component',
+    icon: renderIcon(MdSubway),
   },
   children: [
     {
@@ -18,6 +22,7 @@ const individuationRouter: CreateWindowOptions = {
       component: TaskBar,
       meta: {
         title: '任务栏设置',
+        icon: renderIcon(MdSubway),
       },
     },
     {
@@ -25,6 +30,7 @@ const individuationRouter: CreateWindowOptions = {
       component: Desktop,
       meta: {
         title: '桌面设置',
+        icon: renderIcon(MdStar),
       },
     },
     {
@@ -32,6 +38,7 @@ const individuationRouter: CreateWindowOptions = {
       component: Echarts,
       meta: {
         title: 'e-chart',
+        icon: renderIcon(MdPhotos),
       },
     },
     {
@@ -39,6 +46,7 @@ const individuationRouter: CreateWindowOptions = {
       component: BMap,
       meta: {
         title: 'bMap',
+        icon: renderIcon(MdRainy),
       },
     },
   ],
