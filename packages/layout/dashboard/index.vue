@@ -11,7 +11,10 @@
   import { mapRouter } from '@packages/utils';
   const [{ meta, fullPath }, router] = [useRoute(), useRouter()];
 
-  const activeKey = ref(meta?.menus[0].path as string);
+  const activeKey = ref(
+    fullPath.substring(fullPath.lastIndexOf('/') + 1),
+    fullPath.length
+  );
   const collapsed = ref(false);
 
   const menuOptions: MenuOption[] = computed(() => {
@@ -22,6 +25,7 @@
   });
 
   const handleUpdateValue = (_, item: MenuOption) => {
+    console.log(item.key);
     router.push(item.key);
     activeKey.value = item.key;
   };
@@ -39,7 +43,10 @@
         collapse-mode="width"
         bordered
       >
-        <div @click="router.push('/desktop')">哈哈</div>
+        <div class="project-info flex-star" @click="router.push('/desktop')">
+          <img src="logo.webp" />
+          <div v-show="!collapsed">GH Admin</div>
+        </div>
         <n-menu
           :options="menuOptions"
           :inverted="false"
@@ -67,6 +74,22 @@
     > :deep(.n-layout-scroll-container) {
       display: flex;
       flex-direction: column;
+    }
+    .project-info {
+      height: 43px;
+      border-bottom: 1px solid #f2f2f2;
+      padding: 0 10px;
+      cursor: pointer;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+      div {
+        padding-top: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 10px;
+      }
     }
     :deep(.n-layout-sider-scroll-container)::-webkit-scrollbar {
       display: none;

@@ -3,15 +3,23 @@
   import { computed, ref } from 'vue';
   import { CreateWindowOptions } from '../typing';
   import type { RouteRecordRaw } from 'vue-router';
-  const props = defineProps<{ options: CreateWindowOptions }>();
+  const props = defineProps<{
+    options: CreateWindowOptions;
+    defaultView?: string;
+  }>();
 
-  const activeKey = ref<string>(props.options.children[0].path);
+  console.log(props.defaultView);
+
+  const activeKey = ref<string>(
+    props.defaultView ? props.defaultView : props.options.children[0].path
+  );
+
+  console.log(activeKey.value);
 
   const component = computed(() => {
     const current = props.options.children?.find(
       (r) => r.path === activeKey.value
     );
-    console.log(current.component);
     return current.component;
   });
 

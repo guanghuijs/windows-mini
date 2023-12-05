@@ -74,7 +74,6 @@ importers:
       '@types/lodash-es': ^4.17.7
       '@types/mockjs': ^1.0.7
       '@types/node': ^16.11.56
-      '@vicons/ionicons4': ^0.12.0
       '@vitejs/plugin-vue': ^3.0.3
       '@vitejs/plugin-vue-jsx': ^2.0.1
       '@vue/eslint-config-prettier': ^7.0.0
@@ -118,7 +117,6 @@ importers:
       '@rushstack/eslint-patch': 1.3.2
       '@types/mockjs': 1.0.7
       '@types/node': 16.18.38
-      '@vicons/ionicons4': 0.12.0
       '@vitejs/plugin-vue': 3.2.0_vite@3.2.7+vue@3.3.4
       '@vitejs/plugin-vue-jsx': 2.1.1_vite@3.2.7+vue@3.3.4
       '@vue/eslint-config-prettier': 7.1.0_eslint@8.44.0+prettier@2.8.8
@@ -137,14 +135,18 @@ importers:
   packages/layout:
     specifiers:
       '@packages/static': workspace:*
+      '@packages/utils': workspace:*
     dependencies:
       '@packages/static': link:../static
+      '@packages/utils': link:../utils
 
   packages/static:
     specifiers:
       '@packages/layout': workspace:*
+      '@packages/utils': workspace:*
     dependencies:
       '@packages/layout': link:../layout
+      '@packages/utils': link:../utils
 
   packages/utils:
     specifiers: {}

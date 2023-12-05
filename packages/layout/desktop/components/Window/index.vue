@@ -7,7 +7,7 @@
   import Main from './Main.vue';
 
   const { zIndex, taskBarPosition } = useDesktopStoreRefs();
-  const { addZIndex } = useDesktopStore();
+  const { addZIndex, excursionWindowPoint } = useDesktopStore();
 
   watch(taskBarPosition, () => {
     edgeDetectionRef();
@@ -15,11 +15,19 @@
 
   const windowRef = ref<HTMLElement>();
   let topRef = ref<HTMLElement>();
-  const props = defineProps<{ options?: CreateWindowOptions }>();
-  console.log(props.options);
+  const props = withDefaults(
+    defineProps<{
+      options?: CreateWindowOptions;
+      defaultView?: string;
+      windowPoint?: { x: number; y: number };
+    }>(),
+    {
+      windowPoint: () => ({ x: 150, y: 100 }),
+    }
+  );
 
-  const x = ref(150);
-  const y = ref(100);
+  const x = ref(props.windowPoint.x);
+  const y = ref(props.windowPoint.y);
   const active = ref(false);
 
   const visible = ref(true);
@@ -35,7 +43,8 @@
   onMounted(() => {
     document.querySelector('.desktop')?.addEventListener('mouseover', (e) => {
       topRef.value = e.target as HTMLElement;
-      draggable.value = e.target!.classList.contains('drag-handle');
+      draggable.value =
+        e.target!.classList.contains('drag-handle') && !unref(isMax);
     });
   });
 
@@ -53,6 +62,7 @@
   // 拖拽结束
   const dragEndHandle = () => {
     isIframeDisabled.value = false;
+    excursionWindowPoint('drag', { x: unref(x), y: unref(y) });
     edgeDetectionRef();
   };
 
@@ -138,7 +148,7 @@
       </div>
       <div class="window-content drag-cancel">
         <template v-if="options?.meta?.way === 'component'">
-          <Main :options="options"></Main>
+          <Main :options="options" :default-view="defaultView"></Main>
         </template>
         <iframe
           v-else
