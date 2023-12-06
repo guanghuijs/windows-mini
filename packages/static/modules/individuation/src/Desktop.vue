@@ -8,8 +8,10 @@
 </script>
 
 <template>
-  桌面
-  <div @click="fn">打开个性化地图</div>
+  <div>
+    桌面
+    <div @click="fn">打开个性化地图</div>
+  </div>
 </template>
 
 <style scoped lang="less"></style>

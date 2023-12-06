@@ -1,10 +1,12 @@
 <script setup lang="ts">
   import { computed, onMounted, ref, unref, watch } from 'vue';
+  // https://github.com/a7650/vue3-draggable-resizable
   import Vue3DraggableResizable from 'vue3-draggable-resizable';
   import { edgeDetection, getParentTarget } from './helper';
   import type { CreateWindowOptions } from '../typing';
   import { useDesktopStoreRefs, useDesktopStore } from '../../store';
   import Main from './Main.vue';
+  import { useWindowSize, useDebounceFn } from '@vueuse/core';
 
   const { zIndex, taskBarPosition } = useDesktopStoreRefs();
   const { addZIndex, excursionWindowPoint } = useDesktopStore();
@@ -30,6 +32,37 @@
   const y = ref(props.windowPoint.y);
   const active = ref(false);
 
+  const { width, height } = useWindowSize();
+
+  const w = ref(0);
+  const h = ref(0);
+
+  watch(
+    () => [width.value, height.value],
+    useDebounceFn(([newW, newH]) => {
+      w.value = width.value - 300;
+      h.value = height.value - 200;
+      if (newW <= 1000 && newH <= 800) {
+        isMax.value = true;
+      }
+    }, 500),
+    {
+      immediate: true,
+    }
+  );
+
+  watch(
+    () => active.value,
+    (value) => {
+      if (value) {
+        excursionWindowPoint('drag', {
+          x: unref(x),
+          y: unref(y),
+        });
+      }
+    }
+  );
+
   const visible = ref(true);
   const isMax = ref(false);
 
@@ -46,6 +79,8 @@
       draggable.value =
         e.target!.classList.contains('drag-handle') && !unref(isMax);
     });
+    w.value = width.value - 300;
+    h.value = height.value - 200;
   });
 
   // 进入活跃状态
@@ -99,8 +134,8 @@
 
   const clickFn = (e: MouseEvent) => {
     const dom = getParentTarget(e.target as HTMLElement);
-    dom.style.zIndex = zIndex.value;
     addZIndex();
+    dom.style.zIndex = zIndex.value;
   };
 
   const dbClickFn = () => {
@@ -118,6 +153,8 @@
       v-model:active="active"
       v-model:x="x"
       v-model:y="y"
+      v-model:w="w"
+      v-model:h="h"
       :minW="500"
       :minH="400"
       :draggable="draggable"

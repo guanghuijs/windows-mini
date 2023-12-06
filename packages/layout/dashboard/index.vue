@@ -11,10 +11,7 @@
   import { mapRouter } from '@packages/utils';
   const [{ meta, fullPath }, router] = [useRoute(), useRouter()];
 
-  const activeKey = ref(
-    fullPath.substring(fullPath.lastIndexOf('/') + 1),
-    fullPath.length
-  );
+  const activeKey = ref(fullPath.substring(fullPath.lastIndexOf('/') + 1));
   const collapsed = ref(false);
 
   const menuOptions: MenuOption[] = computed(() => {
@@ -45,7 +42,7 @@
       >
         <div class="project-info flex-star" @click="router.push('/desktop')">
           <img src="logo.webp" />
-          <div v-show="!collapsed">GH Admin</div>
+          <div v-show="!collapsed">Admin</div>
         </div>
         <n-menu
           :options="menuOptions"

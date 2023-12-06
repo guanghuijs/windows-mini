@@ -1,6 +1,8 @@
 <template>
-  <div ref="helloChartRef" class="chart"></div>
-  <div @click="num++">{{ num }}</div>
+  <div>
+    <div ref="helloChartRef" class="chart"></div>
+    <div @click="num++">{{ num }}</div>
+  </div>
 </template>
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';

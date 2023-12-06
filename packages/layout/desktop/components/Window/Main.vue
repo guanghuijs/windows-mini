@@ -60,9 +60,11 @@
       </n-layout-sider>
       <n-layout>
         <div class="right-container">
-          <keep-alive>
-            <component :is="component" />
-          </keep-alive>
+          <Transition mode="out-in">
+            <keep-alive>
+              <component :is="component" />
+            </keep-alive>
+          </Transition>
         </div>
       </n-layout>
     </n-layout>
@@ -82,5 +84,16 @@
     .right-container {
       padding: 20px;
     }
+  }
+
+  .v-enter-active,
+  .v-leave-active {
+    transition: all 0.25s ease;
+  }
+
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
+    transform: rotate(360deg) translateX(50px);
   }
 </style>

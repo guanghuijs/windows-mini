@@ -35,7 +35,6 @@ importers:
       vue3-draggable-resizable: ^1.6.5
     dependencies:
       '@types/lodash-es': 4.17.7
-      '@vueuse/core': 10.2.1_vue@3.3.4
       echarts: 5.4.3
       less: 4.1.3
       lodash-es: 4.17.21
@@ -55,6 +54,7 @@ importers:
       '@vue/eslint-config-prettier': 7.1.0_eslint@8.44.0+prettier@2.8.8
       '@vue/eslint-config-typescript': 11.0.3_4bed45e19c0b5bd29c65f9e6871897f0
       '@vue/tsconfig': 0.1.3_@types+node@16.18.38
+      '@vueuse/core': 10.2.1_vue@3.3.4
       eslint: 8.44.0
       eslint-plugin-vue: 9.15.1_eslint@8.44.0
       naive-ui: 2.35.0_vue@3.3.4
@@ -676,7 +676,6 @@ packages:
 
   /@types/web-bluetooth/0.0.17:
     resolution: {integrity: sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==}
-    dev: false
 
   /@typescript-eslint/eslint-plugin/5.61.0_f6e338fae4e45d2a0d859efe99df61c2:
     resolution: {integrity: sha512-A5l/eUAug103qtkwccSCxn8ZRwT+7RXWkFECdA4Cvl1dOlDUgTpAOfSEElZn2uSUxhdDpnCdetrf0jvU4qrL+g==}
@@ -1044,11 +1043,9 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: false
 
   /@vueuse/metadata/10.2.1:
     resolution: {integrity: sha512-3Gt68mY/i6bQvFqx7cuGBzrCCQu17OBaGWS5JdwISpMsHnMKKjC2FeB5OAfMcCQ0oINfADP3i9A4PPRo0peHdQ==}
-    dev: false
 
   /@vueuse/shared/10.2.1_vue@3.3.4:
     resolution: {integrity: sha512-QWHq2bSuGptkcxx4f4M/fBYC3Y8d3M2UYyLsyzoPgEoVzJURQ0oJeWXu79OiLlBb8gTKkqe4mO85T/sf39mmiw==}
@@ -1057,7 +1054,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: false
 
   /acorn-jsx/5.3.2_acorn@8.10.0:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -3233,7 +3229,6 @@ packages:
         optional: true
     dependencies:
       vue: 3.3.4
-    dev: false
 
   /vue-drag-resize/1.5.4:
     resolution: {integrity: sha512-SR3U7n6TAZEBgP7zw7bR9mjtAlYBjqIoaWTDPz5HXN/nYhOxKSA31aD7p71fmq1jtyt9reAnCx62valNL9ZAcg==}
