@@ -1,12 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import type { CreateWindowOptions } from '@packages/layout';
 import { menus } from '@app/router/layout';
-import { Desktop, Dashboard } from '@packages/layout';
+import { Desktop, Dashboard, Login } from '@packages/layout';
 
 const routes: Array<CreateWindowOptions> = [
   {
     path: '/',
-    redirect: '/desktop',
+    redirect: '/login',
+  },
+  {
+    path: '/login',
+    component: Login,
   },
   {
     path: '/desktop',
