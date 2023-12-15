@@ -7,7 +7,7 @@
   const battery = ref<any>(0);
   const timer = ref<Interval | null>(null);
 
-  const { taskBarPosition } = useDesktopStoreRefs();
+  const { taskBarPosition, minimizeList } = useDesktopStoreRefs();
   const formatted = useDateFormat(useNow(), 'HH:mm:ss');
 
   onMounted(() => {
@@ -21,6 +21,10 @@
     }, 1000);
   });
 
+  const minimizeOpen = (item) => {
+    console.log(item);
+  };
+
   onUnmounted(() => {
     clearInterval(timer.value);
     timer.value = null;
@@ -30,7 +34,16 @@
 <template>
   <div class="task-bar flex-star" :class="`task-bar-${taskBarPosition}`">
     <i class="win iconfont icon-win" @click="$emit('systemMenuToggle')"></i>
-    <div class="main"></div>
+    <div class="main">
+      <div
+        class="minimize-item"
+        @click="minimizeOpen(item)"
+        v-for="item in minimizeList"
+        :key="item"
+      >
+        <component :is="item.meta.icon"></component>
+      </div>
+    </div>
     <div class="right flex-star">
       <div class="battery" :title="`${battery.level * 100}%`">
         <div
@@ -55,15 +68,27 @@
     backdrop-filter: blur(10px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: top 0.25s;
+    font-size: 0;
     i.win {
       font-size: 20px;
       cursor: pointer;
       &:hover {
-        color: red;
+        color: var(--theme);
       }
     }
     .main {
       flex: 1;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      .minimize-item {
+        cursor: pointer;
+        color: var(--theme);
+        margin-left: 5px;
+        i {
+          font-size: 20px;
+        }
+      }
     }
     .right {
       > div {

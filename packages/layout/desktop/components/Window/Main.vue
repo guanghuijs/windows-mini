@@ -3,6 +3,7 @@
   import { computed, ref } from 'vue';
   import { CreateWindowOptions } from '../typing';
   import type { RouteRecordRaw } from 'vue-router';
+  import { mapRouter } from '@packages/utils';
   const props = defineProps<{
     options: CreateWindowOptions;
     defaultView?: string;
@@ -26,12 +27,7 @@
   const collapsed = ref(false);
 
   const menuOptions = computed<MenuOption[]>(() => {
-    return props.options?.children.map((router: RouteRecordRaw) => {
-      return {
-        key: router.path,
-        label: router.meta?.title,
-      };
-    });
+    return mapRouter(props.options?.children);
   });
 
   const handleUpdateValue = (e) => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useDesktopStoreRefs } from '../../store';
-  const { taskBarPosition } = useDesktopStoreRefs();
+  const { taskBarPosition, systemMenuDirection } = useDesktopStoreRefs();
 
   withDefaults(
     defineProps<{
@@ -23,7 +23,9 @@
         v-show="show"
         class="system-menu"
         :class="`system-menu-${taskBarPosition}`"
-      ></div>
+      >
+        {{ taskBarPosition }}
+      </div>
     </Transition>
   </div>
 </template>

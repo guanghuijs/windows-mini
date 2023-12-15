@@ -1,5 +1,7 @@
 import { computed, ref, unref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
+import type { CreateWindowOptions } from './components/typing';
+export type MinimizeMenu = CreateWindowOptions & { el: HTMLDivElement };
 
 export const useDesktopStore = defineStore('desktop', () => {
   const taskBarPosition = ref<'top' | 'bottom'>('bottom');
@@ -19,11 +21,17 @@ export const useDesktopStore = defineStore('desktop', () => {
     zIndex.value++;
   };
 
+  // 窗口打开偏移坐标
   const windowPoint = ref({
     x: 130,
     y: 80,
   });
 
+  /**
+   * 偏移后打开窗口起始坐标
+   * @param flag
+   * @param point
+   */
   const excursionWindowPoint = (
     flag: 'new' | 'drag',
     point: { x: number; y: number }
@@ -41,6 +49,17 @@ export const useDesktopStore = defineStore('desktop', () => {
     }
   };
 
+  // 最小化
+  const minimizeList = ref<MinimizeMenu[]>([]);
+
+  /**
+   * 桌面任务栏图标
+   * @param minimizeMenu
+   */
+  const addMinimizeList = (minimizeMenu: MinimizeMenu) => {
+    minimizeList.value.push(minimizeMenu);
+  };
+
   return {
     taskBarPosition,
     setTaskBarPosition,
@@ -49,6 +68,8 @@ export const useDesktopStore = defineStore('desktop', () => {
     addZIndex,
     windowPoint,
     excursionWindowPoint,
+    minimizeList,
+    addMinimizeList,
   };
 });
 

@@ -6,8 +6,8 @@
   import { bgs } from '@packages/static';
   import { TaskBar, SystemMenu } from './components';
   import { createWindow } from './components/Window';
-
   import type { CreateWindowOptions } from './components/typing';
+
   import { useDesktopStoreRefs } from './store';
 
   const { taskBarPosition } = useDesktopStoreRefs();
@@ -15,6 +15,7 @@
   const systemMenuVisible = ref<boolean>(false);
 
   const { meta } = useRoute();
+  console.log(meta);
 
   const systemMenuToggle = () => {
     systemMenuVisible.value = !systemMenuVisible.value;
@@ -42,7 +43,8 @@
         :key="item.path"
         @click="open(item)"
       >
-        {{ item.meta.title }}
+        <component :is="item.meta.icon"></component>
+        <div>{{ item.meta.title }}</div>
       </div>
     </div>
   </div>
@@ -56,11 +58,20 @@
     position: relative;
     background: v-bind(bg) no-repeat center / cover;
     .desktop-cont {
+      display: flex;
+      padding: 20px;
       .item {
-        width: 50px;
-        height: 50px;
-        background: red;
         user-select: none;
+        font-size: 12px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        color: var(--theme);
+        i {
+          font-size: 30px;
+        }
       }
     }
   }

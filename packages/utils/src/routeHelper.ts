@@ -4,13 +4,17 @@ import { MenuOption, NIcon } from 'naive-ui';
 
 export function mapRouter(
   routes: RouteRecordRaw[],
-  fullPath: string
+  fullPath?: string
 ): MenuOption[] {
   return routes?.map((router: RouteRecordRaw) => ({
     key: router.path,
     label: router.meta?.title,
     icon: router.meta?.icon,
-    path: !router.children?.length ? fullPath + '/' + router.path : undefined,
+    path: fullPath
+      ? ''
+      : !router.children?.length
+      ? fullPath + '/' + router.path
+      : undefined,
     children: mapRouter(router.children, fullPath),
   }));
 }

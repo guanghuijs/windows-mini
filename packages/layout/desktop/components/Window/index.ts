@@ -13,7 +13,8 @@ export function createWindow(
   }
 
   const { zIndex, windowPoint } = useDesktopStoreRefs();
-  const { addZIndex, excursionWindowPoint } = useDesktopStore();
+  const { addZIndex, excursionWindowPoint, addMinimizeList } =
+    useDesktopStore();
   addZIndex();
   excursionWindowPoint('new');
   const winId = 'winid' + new Date().getTime();
@@ -21,10 +22,11 @@ export function createWindow(
   div.setAttribute('winId', winId);
   console.log(windowPoint.value);
   div.style.zIndex = zIndex.value;
-  document.querySelector('.desktop')!.appendChild(div);
+  document.querySelector('.desktop')?.appendChild(div);
   render(
     h(Window, { options, defaultView, windowPoint: unref(windowPoint) }),
     document.querySelector(`div[winid=${winId}]`)!
   );
   div.classList.add('window-id');
+  addMinimizeList(Object.assign(options, { el: div }));
 }
