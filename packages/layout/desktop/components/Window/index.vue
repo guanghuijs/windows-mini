@@ -83,7 +83,7 @@
     h.value = height.value - 200;
   });
 
-  // 进入活跃状态
+  // 进入激活状态
   const activatedHandle = () => {};
 
   // 开始拖拽
@@ -114,22 +114,10 @@
 
   function edgeDetectionRef() {
     const { minLeft, minTop, maxLeft, maxTop } = edgeDetection(topRef.value!);
-
-    if (unref(x) <= minLeft) {
-      x.value = minLeft;
-    }
-
-    if (unref(x) >= maxLeft) {
-      x.value = maxLeft;
-    }
-
-    if (unref(y) <= minTop) {
-      y.value = minTop;
-    }
-
-    if (unref(y) >= maxTop) {
-      y.value = maxTop;
-    }
+    if (unref(x) <= minLeft) x.value = minLeft;
+    if (unref(x) >= maxLeft) x.value = maxLeft;
+    if (unref(y) <= minTop) y.value = minTop;
+    if (unref(y) >= maxTop) y.value = maxTop;
   }
 
   const clickFn = (e: MouseEvent) => {

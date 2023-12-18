@@ -74,13 +74,12 @@
         }
       }
     }
-  }
+    .desktop-cont-taskbar-top {
+      padding-top: 50px;
+    }
 
-  .desktop-cont-taskbar-top {
-    padding-top: 30px;
-  }
-
-  .desktop-cont-taskbar-bottom {
-    padding-bottom: 30px;
+    .desktop-cont-taskbar-bottom {
+      padding-bottom: 50px;
+    }
   }
 </style>
