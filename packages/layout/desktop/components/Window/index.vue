@@ -37,6 +37,9 @@
   const w = ref(0);
   const h = ref(0);
 
+  const minW = ref(0);
+  const minH = ref(0);
+
   watch(
     () => [width.value, height.value],
     useDebounceFn(([newW, newH]) => {
@@ -63,7 +66,7 @@
     }
   );
 
-  const visible = ref(true);
+  const visible = ref(false);
   const isMax = ref(false);
 
   const draggable = ref(true);
@@ -74,13 +77,17 @@
 
   const isIframeDisabled = ref(false);
   onMounted(() => {
-    document.querySelector('.desktop')?.addEventListener('mouseover', (e) => {
+    visible.value = true;
+    const desktopDom = document.querySelector('.desktop')!;
+    desktopDom.addEventListener('mouseover', (e) => {
       topRef.value = e.target as HTMLElement;
       draggable.value =
         e.target!.classList.contains('drag-handle') && !unref(isMax);
     });
     w.value = width.value - 300;
     h.value = height.value - 200;
+    minW.value = desktopDom.clientWidth - 300;
+    minH.value = desktopDom.clientHeight - 200;
   });
 
   // 进入激活状态
@@ -129,12 +136,17 @@
   const dbClickFn = () => {
     isMax.value = !isMax.value;
   };
+
+  const onAfterEnter = () => {
+    minW.value = 700;
+    minH.value = 500;
+  };
 </script>
 
 <template>
-  <Transition>
+  <Transition @after-enter="onAfterEnter">
     <Vue3DraggableResizable
-      v-show="visible"
+      v-if="visible"
       ref="windowRef"
       class="viewport"
       :class="isMax ? `max ${taskBarPosition}` : ''"
@@ -143,8 +155,8 @@
       v-model:y="y"
       v-model:w="w"
       v-model:h="h"
-      :minW="500"
-      :minH="400"
+      :minW="minW"
+      :minH="minH"
       :draggable="draggable"
       :resizable="resizeable"
       @activated="activatedHandle"

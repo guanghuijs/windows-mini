@@ -1,13 +1,13 @@
 import { computed, ref, unref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
-import type { CreateWindowOptions } from './components/typing';
-export type MinimizeMenu = CreateWindowOptions & { el: HTMLDivElement };
 import { getLocalStore, setLocalStore } from '@packages/utils';
 import { DesktopStore } from '@packages/types/layout';
 
 export const useDesktopStore = defineStore('desktop', () => {
-  const a = getLocalStore<DesktopStore<taskBarPosition>>('');
-  const taskBarPosition = ref();
+  const taskBarPosition = ref(
+    getLocalStore<DesktopStore<config>>('desktopStore').taskBarPosition ||
+      'bottom'
+  );
 
   const systemMenuDirection = computed(() => {
     return taskBarPosition.value === 'bottom'
@@ -15,12 +15,12 @@ export const useDesktopStore = defineStore('desktop', () => {
       : 'translateY(-30px)';
   });
 
-  const setTaskBarPosition = (position: DesktopStore<taskBarPosition>) => {
-    setLocalStore('taskBarPosition', position);
+  const setTaskBarPosition = (position: DesktopStore.taskBarPosition) => {
+    const store = getLocalStore<DesktopStore.config>('desktopStore');
+    store.taskBarPosition = position;
+    setLocalStore('desktopStore', store);
     taskBarPosition.value = position;
   };
-
-  setTaskBarPosition('t');
 
   const zIndex = ref(20);
   const addZIndex = () => {

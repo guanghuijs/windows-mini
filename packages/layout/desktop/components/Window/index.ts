@@ -1,5 +1,5 @@
 import { render, h, unref } from 'vue';
-import type { CreateWindowOptions } from '@/layout/desktop/components/typing';
+import type { CreateWindowOptions } from '@packages/types/layout';
 import Window from './index.vue';
 import { useDesktopStore, useDesktopStoreRefs } from '../../store';
 
@@ -28,5 +28,5 @@ export function createWindow(
     document.querySelector(`div[winid=${winId}]`)!
   );
   div.classList.add('window-id');
-  addMinimizeList(Object.assign(options, { el: div }));
+  addMinimizeList(Object.assign(options, { el: div, winId }));
 }

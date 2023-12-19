@@ -6,7 +6,7 @@
   import { bgs } from '@packages/static';
   import { TaskBar, SystemMenu } from './components';
   import { createWindow } from './components/Window';
-  import type { CreateWindowOptions } from './components/typing';
+  import type { CreateWindowOptions } from '@packages/types/layout';
 
   import { useDesktopStoreRefs } from './store';
 
