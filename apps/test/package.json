@@ -13,6 +13,7 @@
     "@packages/layout": "workspace:*",
     "@packages/utils": "workspace:*",
     "@packages/static": "workspace:*",
+    "@packages/types": "workspace:*",
     "@types/lodash-es": "^4.17.7",
     "@vueuse/core": "^10.2.1",
     "echarts": "^5.4.3",
