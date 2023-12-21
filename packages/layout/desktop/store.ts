@@ -1,12 +1,15 @@
-import { computed, ref, unref } from 'vue';
+import { computed, ref, unref, watch } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
+import { Random } from 'mockjs';
+
 import { getLocalStore, setLocalStore } from '@packages/utils';
+import { GetPropType } from '@packages/types';
 import { DesktopStore } from '@packages/types/layout';
+import { bgs } from '@packages/static/background';
 
 export const useDesktopStore = defineStore('desktop', () => {
   const taskBarPosition = ref(
-    getLocalStore<DesktopStore<config>>('desktopStore').taskBarPosition ||
-      'bottom'
+    getLocalStore<DesktopStore>('desktopStore').taskBarPosition || 'bottom'
   );
 
   const systemMenuDirection = computed(() => {
@@ -15,8 +18,10 @@ export const useDesktopStore = defineStore('desktop', () => {
       : 'translateY(-30px)';
   });
 
-  const setTaskBarPosition = (position: DesktopStore.taskBarPosition) => {
-    const store = getLocalStore<DesktopStore.config>('desktopStore');
+  const setTaskBarPosition = (
+    position: GetPropType<DesktopStore, 'taskBarPosition'>
+  ) => {
+    const store = getLocalStore<DesktopStore>('desktopStore');
     store.taskBarPosition = position;
     setLocalStore('desktopStore', store);
     taskBarPosition.value = position;
@@ -66,6 +71,26 @@ export const useDesktopStore = defineStore('desktop', () => {
     minimizeList.value.push(minimizeMenu);
   };
 
+  // 主题颜色
+  const themeColor = ref('#008000');
+
+  watch(themeColor, (value) => {
+    document.querySelector('body')?.style.setProperty('--theme', value);
+  });
+
+  //桌面背景
+  const desktopBg = ref(`url(${bgs[Random.integer(0, bgs.length - 1)]})`);
+
+  // 随机背景
+  const desktopBgNext = () => {
+    desktopBg.value = `url(${bgs[Random.integer(0, bgs.length - 1)]})`;
+  };
+
+  // 开启桌面快捷切换背景快捷键
+  const isQuickToggleBg = ref(true);
+
+  const compTransitionMode = ref('opacity');
+
   return {
     taskBarPosition,
     setTaskBarPosition,
@@ -76,6 +101,11 @@ export const useDesktopStore = defineStore('desktop', () => {
     excursionWindowPoint,
     minimizeList,
     addMinimizeList,
+    desktopBg,
+    themeColor,
+    desktopBgNext,
+    isQuickToggleBg,
+    compTransitionMode,
   };
 });
 

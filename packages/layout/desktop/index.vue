@@ -2,20 +2,15 @@
   import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css';
   import { useRoute } from 'vue-router';
   import { ref } from 'vue';
-  import { Random } from 'mockjs';
-  import { bgs } from '@packages/static';
   import { TaskBar, SystemMenu } from './components';
   import { createWindow } from './components/Window';
   import type { CreateWindowOptions } from '@packages/types/layout';
+  import { useDesktopStore, useDesktopStoreRefs } from './store';
 
-  import { useDesktopStoreRefs } from './store';
-
-  const { taskBarPosition } = useDesktopStoreRefs();
-  const bg = ref(`url(${bgs[Random.integer(0, bgs.length - 1)]})`);
+  const { desktopBgNext } = useDesktopStore();
+  const { taskBarPosition, desktopBg, isQuickToggleBg } = useDesktopStoreRefs();
   const systemMenuVisible = ref<boolean>(false);
-
   const { meta } = useRoute();
-  console.log(meta);
 
   const systemMenuToggle = () => {
     systemMenuVisible.value = !systemMenuVisible.value;
@@ -28,6 +23,13 @@
 
 <template>
   <div class="desktop">
+    <i
+      v-show="isQuickToggleBg"
+      class="toggle-bg iconfont icon-fengling"
+      @click="desktopBgNext"
+      title="随机切换背景"
+      :style="{ top: taskBarPosition === 'top' ? '30px' : '0px' }"
+    ></i>
     <SystemMenu
       :show="systemMenuVisible"
       @systemMenuToggle="systemMenuToggle"
@@ -56,7 +58,16 @@
     height: 100vh;
     overflow: hidden;
     position: relative;
-    background: v-bind(bg) no-repeat center / cover;
+    background: v-bind(desktopBg) no-repeat center / cover;
+    transition: background 0.5s;
+    .toggle-bg {
+      position: fixed;
+      right: 5px;
+      top: 50px;
+      color: var(--theme);
+      font-size: 32px;
+      cursor: pointer;
+    }
     .desktop-cont {
       display: flex;
       padding: 20px;

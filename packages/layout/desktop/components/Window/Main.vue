@@ -1,35 +1,28 @@
 <script setup lang="ts">
   import { NMenu, NLayout, NLayoutSider, MenuOption } from 'naive-ui';
   import { computed, ref } from 'vue';
-  import { CreateWindowOptions } from '../typing';
-  import type { RouteRecordRaw } from 'vue-router';
+  import { CreateWindowOptions } from '@packages/types/layout';
   import { mapRouter } from '@packages/utils';
+  import { useDesktopStoreRefs } from '../../store';
+  const { compTransitionMode } = useDesktopStoreRefs();
+
   const props = defineProps<{
     options: CreateWindowOptions;
     defaultView?: string;
   }>();
-
-  console.log(props.defaultView);
-
   const activeKey = ref<string>(
     props.defaultView ? props.defaultView : props.options.children[0].path
   );
-
-  console.log(activeKey.value);
-
   const component = computed(() => {
     const current = props.options.children?.find(
       (r) => r.path === activeKey.value
     );
     return current.component;
   });
-
   const collapsed = ref(false);
-
   const menuOptions = computed<MenuOption[]>(() => {
     return mapRouter(props.options?.children);
   });
-
   const handleUpdateValue = (e) => {
     console.log(e);
   };
@@ -56,7 +49,7 @@
       </n-layout-sider>
       <n-layout>
         <div class="right-container">
-          <Transition mode="out-in">
+          <Transition :name="compTransitionMode" mode="out-in">
             <keep-alive>
               <component :is="component" />
             </keep-alive>
@@ -80,16 +73,5 @@
     .right-container {
       padding: 20px;
     }
-  }
-
-  .v-enter-active,
-  .v-leave-active {
-    transition: all 0.25s ease;
-  }
-
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
-    transform: rotate(360deg) translateX(50px);
   }
 </style>

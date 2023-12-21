@@ -40,6 +40,7 @@
         @click="minimizeOpen(item)"
         v-for="item in minimizeList"
         :key="item"
+        :title="item.meta.title"
       >
         <component :is="item.meta.icon"></component>
       </div>
@@ -72,8 +73,10 @@
     i.win {
       font-size: 20px;
       cursor: pointer;
+      color: var(--theme);
+      opacity: 1;
       &:hover {
-        color: var(--theme);
+        opacity: 0.7;
       }
     }
     .main {

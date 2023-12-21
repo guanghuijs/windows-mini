@@ -1,5 +1,6 @@
-import type { CreateWindowOptions } from '@packages/layout';
+import type { CreateWindowOptions } from '@packages/types/layout';
 import {
+  Theme,
   TaskBar,
   Desktop,
   Echarts,
@@ -18,10 +19,10 @@ const individuationRouter: CreateWindowOptions = {
   },
   children: [
     {
-      path: 'taskbar',
-      component: TaskBar,
+      path: 'theme',
+      component: Theme,
       meta: {
-        title: '任务栏设置',
+        title: '主题设置',
         icon: renderIcon(MdSubway),
       },
     },
@@ -31,6 +32,14 @@ const individuationRouter: CreateWindowOptions = {
       meta: {
         title: '桌面设置',
         icon: renderIcon(MdStar),
+      },
+    },
+    {
+      path: 'taskbar',
+      component: TaskBar,
+      meta: {
+        title: '任务栏设置',
+        icon: renderIcon(MdSubway),
       },
     },
     {

@@ -22,7 +22,6 @@
   });
 
   const handleUpdateValue = (_, item: MenuOption) => {
-    console.log(item.key);
     router.push(item.key);
     activeKey.value = item.key;
   };
@@ -41,7 +40,7 @@
         bordered
       >
         <div class="project-info flex-star" @click="router.push('/desktop')">
-          <img src="logo.webp" />
+          <img src="logo.webp" alt="" />
           <div v-show="!collapsed">Admin</div>
         </div>
         <n-menu

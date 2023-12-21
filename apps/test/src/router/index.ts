@@ -72,7 +72,6 @@ type G = {
 };
 
 const gg: G = { a: '', b: '', c: '' };
-console.log(gg);
 
 function g1<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];

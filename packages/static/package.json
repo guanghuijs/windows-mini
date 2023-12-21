@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@packages/layout": "workspace:*",
-    "@packages/utils": "workspace:*"
+    "@packages/utils": "workspace:*",
+    "@packages/static": "workspace:*"
   }
 }

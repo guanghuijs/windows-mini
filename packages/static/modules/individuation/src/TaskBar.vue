@@ -5,15 +5,22 @@
     useDesktopStoreRefs,
   } from '@packages/layout/desktop/store';
   import { taskBarPositionOptions, taskBarAlignment } from './data';
-  import { ref } from 'vue';
+  import { reactive, watch } from 'vue';
   const { taskBarPosition } = useDesktopStoreRefs();
   const { setTaskBarPosition } = useDesktopStore();
 
-  const value = ref({
+  const value = reactive({
     position: taskBarPosition.value,
     alignment: 'left',
     hiddenWin: false,
   });
+
+  watch(
+    () => value.position,
+    (value) => {
+      setTaskBarPosition(value);
+    }
+  );
 </script>
 
 <template>
