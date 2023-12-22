@@ -1,10 +1,10 @@
-import { computed, ref, unref, watch } from 'vue';
+import { computed, ref, unref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { Random } from 'mockjs';
 
 import { getLocalStore, setLocalStore } from '@packages/utils';
 import { GetPropType } from '@packages/types';
-import { DesktopStore } from '@packages/types/layout';
+import { DesktopStore, CreateWindowOptions } from '@packages/types/layout';
 import { bgs } from '@packages/static/background';
 
 export const useDesktopStore = defineStore('desktop', () => {
@@ -61,22 +61,18 @@ export const useDesktopStore = defineStore('desktop', () => {
   };
 
   // 最小化
-  const minimizeList = ref<MinimizeMenu[]>([]);
+  const minimizeList = ref<CreateWindowOptions[]>([]);
 
   /**
    * 桌面任务栏图标
    * @param minimizeMenu
    */
-  const addMinimizeList = (minimizeMenu: MinimizeMenu) => {
+  const addMinimizeList = (minimizeMenu: CreateWindowOptions) => {
     minimizeList.value.push(minimizeMenu);
   };
 
   // 主题颜色
-  const themeColor = ref('#008000');
-
-  watch(themeColor, (value) => {
-    document.querySelector('body')?.style.setProperty('--theme', value);
-  });
+  const primaryColor = ref('#008000');
 
   //桌面背景
   const desktopBg = ref(`url(${bgs[Random.integer(0, bgs.length - 1)]})`);
@@ -91,6 +87,13 @@ export const useDesktopStore = defineStore('desktop', () => {
 
   const compTransitionMode = ref('opacity');
 
+  // 桌面主题
+  const theme = ref<GetPropType<DesktopStore, 'theme'>>('light');
+
+  // 任务栏图标对齐方式
+  const taskBarIconAlign =
+    ref<GetPropType<DesktopStore, 'taskBarIconAlign'>>('left');
+
   return {
     taskBarPosition,
     setTaskBarPosition,
@@ -102,10 +105,12 @@ export const useDesktopStore = defineStore('desktop', () => {
     minimizeList,
     addMinimizeList,
     desktopBg,
-    themeColor,
+    primaryColor,
     desktopBgNext,
     isQuickToggleBg,
     compTransitionMode,
+    theme,
+    taskBarIconAlign,
   };
 });
 

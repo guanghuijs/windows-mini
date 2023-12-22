@@ -3,7 +3,7 @@
   // https://github.com/a7650/vue3-draggable-resizable
   import Vue3DraggableResizable from 'vue3-draggable-resizable';
   import { edgeDetection, getParentTarget } from './helper';
-  import type { CreateWindowOptions } from '../typing';
+  import type { CreateWindowOptions } from '@packages/types/layout';
   import { useDesktopStoreRefs, useDesktopStore } from '../../store';
   import Main from './Main.vue';
   import { useWindowSize, useDebounceFn } from '@vueuse/core';
@@ -228,6 +228,7 @@
           justify-content: center;
           width: 50px;
           height: 100%;
+          cursor: pointer;
           &:hover {
             background: #d0d2d5;
           }

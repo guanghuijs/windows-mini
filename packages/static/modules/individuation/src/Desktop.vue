@@ -17,15 +17,8 @@
 <!--<style scoped lang="less"></style>-->
 
 <script setup lang="ts">
-  import { reactive, ref } from 'vue';
-  import {
-    NCard,
-    NSpace,
-    NColorPicker,
-    NRadio,
-    NImage,
-    NSwitch,
-  } from 'naive-ui';
+  import { ref } from 'vue';
+  import { NCard, NSpace, NRadio, NImage, NSwitch } from 'naive-ui';
   import { bgs } from '@packages/static';
   import { useDesktopStoreRefs } from '@packages/layout/desktop/store';
   const { desktopBg, isQuickToggleBg, compTransitionMode } =

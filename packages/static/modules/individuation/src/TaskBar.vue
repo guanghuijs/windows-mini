@@ -6,7 +6,7 @@
   } from '@packages/layout/desktop/store';
   import { taskBarPositionOptions, taskBarAlignment } from './data';
   import { reactive, watch } from 'vue';
-  const { taskBarPosition } = useDesktopStoreRefs();
+  const { taskBarPosition, taskBarIconAlign } = useDesktopStoreRefs();
   const { setTaskBarPosition } = useDesktopStore();
 
   const value = reactive({
@@ -21,6 +21,10 @@
       setTaskBarPosition(value);
     }
   );
+
+  const taskBarIconAlignChange = (res) => {
+    taskBarIconAlign.value = res;
+  };
 </script>
 
 <template>
@@ -28,7 +32,6 @@
     <n-card title="任务栏位置" size="small">
       <template #header-extra>
         <n-select
-          style="width: 120px"
           v-model:value="value.position"
           :options="taskBarPositionOptions"
         />
@@ -37,9 +40,9 @@
     <n-card title="任务栏对齐方式" size="small">
       <template #header-extra>
         <n-select
-          style="width: 120px"
           v-model:value="value.alignment"
           :options="taskBarAlignment"
+          @change="taskBarIconAlignChange"
         />
       </template>
     </n-card>

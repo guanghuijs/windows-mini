@@ -7,7 +7,8 @@
   const battery = ref<any>(0);
   const timer = ref<Interval | null>(null);
 
-  const { taskBarPosition, minimizeList } = useDesktopStoreRefs();
+  const { taskBarPosition, minimizeList, primaryColor, taskBarIconAlign } =
+    useDesktopStoreRefs();
   const formatted = useDateFormat(useNow(), 'HH:mm:ss');
 
   onMounted(() => {
@@ -33,16 +34,16 @@
 
 <template>
   <div class="task-bar flex-star" :class="`task-bar-${taskBarPosition}`">
-    <i class="win iconfont icon-win" @click="$emit('systemMenuToggle')"></i>
-    <div class="main">
+    <div class="main" :class="taskBarIconAlign">
+      <i class="win iconfont icon-win" @click="$emit('systemMenuToggle')"></i>
       <div
         class="minimize-item"
         @click="minimizeOpen(item)"
         v-for="item in minimizeList"
         :key="item"
-        :title="item.meta.title"
+        :title="item?.meta.title"
       >
-        <component :is="item.meta.icon"></component>
+        <component :is="item?.meta.icon"></component>
       </div>
     </div>
     <div class="right flex-star">
@@ -70,27 +71,36 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: top 0.25s;
     font-size: 0;
-    i.win {
-      font-size: 20px;
-      cursor: pointer;
-      color: var(--theme);
-      opacity: 1;
-      &:hover {
-        opacity: 0.7;
-      }
-    }
+
     .main {
       flex: 1;
       height: 30px;
-      display: flex;
-      align-items: center;
+      text-align: center;
+      transition: text-align 0.25s;
+      i.win {
+        font-size: 20px;
+        cursor: pointer;
+        color: v-bind(primaryColor);
+        opacity: 1;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
       .minimize-item {
         cursor: pointer;
-        color: var(--theme);
+        color: v-bind(primaryColor);
         margin-left: 5px;
+        display: inline-block;
+        line-height: 30px;
         i {
           font-size: 20px;
         }
+      }
+      &.center {
+        text-align: center;
+      }
+      &.right {
+        text-align: right;
       }
     }
     .right {
@@ -101,18 +111,18 @@
         height: 10px;
         width: 16px;
         padding: 1px;
-        border: 1px solid var(--theme);
+        border: 1px solid v-bind(primaryColor);
         position: relative;
         cursor: pointer;
         .battery-inner {
           height: 100%;
-          background: var(--theme);
+          background: v-bind(primaryColor);
         }
         &::after {
           content: '';
           width: 3px;
           height: 6px;
-          background: var(--theme);
+          background: v-bind(primaryColor);
           position: absolute;
           top: 1px;
           right: -3px;
@@ -123,12 +133,12 @@
           z-index: 1;
           left: -11px;
           top: -2px;
-          color: var(--theme);
+          color: v-bind(primaryColor);
         }
       }
       .time {
         font-size: 12px;
-        color: var(--theme);
+        color: v-bind(primaryColor);
       }
     }
   }

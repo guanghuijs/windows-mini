@@ -57,7 +57,11 @@
           </div>
         </n-layout-header>
         <div class="right-container">
-          <router-view></router-view>
+          <Transition name="fade" mode="out-in">
+            <keep-alive>
+              <router-view></router-view>
+            </keep-alive>
+          </Transition>
         </div>
       </n-layout>
     </n-layout>

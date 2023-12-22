@@ -8,7 +8,8 @@
   import { useDesktopStore, useDesktopStoreRefs } from './store';
 
   const { desktopBgNext } = useDesktopStore();
-  const { taskBarPosition, desktopBg, isQuickToggleBg } = useDesktopStoreRefs();
+  const { taskBarPosition, desktopBg, isQuickToggleBg, primaryColor } =
+    useDesktopStoreRefs();
   const systemMenuVisible = ref<boolean>(false);
   const { meta } = useRoute();
 
@@ -64,7 +65,7 @@
       position: fixed;
       right: 5px;
       top: 50px;
-      color: var(--theme);
+      color: v-bind(primaryColor);
       font-size: 32px;
       cursor: pointer;
     }
@@ -79,7 +80,7 @@
         align-items: center;
         flex-direction: column;
         justify-content: center;
-        color: var(--theme);
+        color: v-bind(primaryColor);
         i {
           font-size: 30px;
         }
