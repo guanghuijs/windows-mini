@@ -61,8 +61,9 @@
     :theme-overrides="themeOverrides"
   >
     <n-layout class="window-container">
-      <n-layout v-if="!options.component" has-sider>
+      <n-layout has-sider>
         <n-layout-sider
+          v-if="!props.options.component"
           :width="240"
           show-trigger
           :collapsed="collapsed"
@@ -80,7 +81,10 @@
         </n-layout-sider>
         <n-layout>
           <div class="right-container">
-            <component v-if="options.component" :is="options.component" />
+            <component
+              v-if="props.options.component"
+              :is="props.options.component"
+            />
             <Transition v-else :name="compTransitionMode" mode="out-in">
               <keep-alive>
                 <component :is="component" />
@@ -105,6 +109,7 @@
     }
     .right-container {
       padding: 20px;
+      height: 100%;
     }
   }
 </style>

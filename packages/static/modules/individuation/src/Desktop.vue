@@ -17,22 +17,13 @@
 <!--<style scoped lang="less"></style>-->
 
 <script setup lang="ts">
-  import { ref } from 'vue';
   import { NCard, NSpace, NRadio, NImage, NSwitch } from 'naive-ui';
   import { bgs } from '@packages/static';
   import { useDesktopStoreRefs } from '@packages/layout/desktop/store';
-  const { desktopBg, isQuickToggleBg, compTransitionMode } =
-    useDesktopStoreRefs();
-
-  const tranFlag = ref(true);
+  const { desktopBg, isQuickToggleBg } = useDesktopStoreRefs();
 
   const desktopChange = (src: string) => {
     desktopBg.value = `url(${src})`;
-  };
-
-  const toggleMode = (m) => {
-    compTransitionMode.value = m;
-    tranFlag.value = !tranFlag.value;
   };
 </script>
 
@@ -60,30 +51,6 @@
           </template>
         </n-switch>
       </template>
-    </n-card>
-    <n-card title="组件过渡动画切换" size="small">
-      <transition :name="compTransitionMode" mode="out-in">
-        <div
-          style="height: 100px; width: 100px; background: green"
-          v-if="tranFlag"
-        ></div>
-        <div
-          style="height: 100px; width: 100px; background: #e81123"
-          v-else
-        ></div>
-      </transition>
-      <n-space>
-        <n-radio
-          v-for="mode in ['opacity', 'rotate', 'fade', 'bounce']"
-          :key="mode"
-          :checked="compTransitionMode === mode"
-          value="Definitely Maybe"
-          name="basic-demo"
-          @change="toggleMode(mode)"
-        >
-          {{ mode }}
-        </n-radio>
-      </n-space>
     </n-card>
   </n-space>
 </template>

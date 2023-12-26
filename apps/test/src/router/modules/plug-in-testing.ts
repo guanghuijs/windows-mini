@@ -1,8 +1,8 @@
 import type { CreateWindowOptions } from '@packages/types/layout';
 import { Echarts, BMap } from '@packages/static/modules/individuation';
 import { renderIcon } from '@packages/utils';
-
 import { MdSubway, MdPhotos, MdRainy } from '@vicons/ionicons4';
+import { ModuleOrderNo } from '../constants';
 
 const plugInTestingRouter: CreateWindowOptions = {
   path: 'plug-in-testing',
@@ -10,6 +10,7 @@ const plugInTestingRouter: CreateWindowOptions = {
     title: '插件测试',
     way: 'component',
     icon: renderIcon(MdSubway),
+    orderNumber: ModuleOrderNo.PLUGIN,
   },
   children: [
     {

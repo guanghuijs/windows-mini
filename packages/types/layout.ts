@@ -2,8 +2,9 @@ import type { RouteRecordRaw } from 'vue-router';
 
 export type CreateWindowOptions = RouteRecordRaw & {
   meta?: {
-    title?: string;
-    icon?: string;
+    title: string;
+    icon: string;
+    orderNumber: number;
     openByTab?: boolean;
     menuState?: 'destroy' | 'hidden';
     way?: 'component';
@@ -27,4 +28,5 @@ export type DesktopStore = {
   isShowWin: boolean;
   taskBarIconAlign: 'left' | 'center' | 'right';
   desktopBg: string;
+  WindowTransparency: number;
 };

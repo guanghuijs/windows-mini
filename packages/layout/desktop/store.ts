@@ -94,6 +94,10 @@ export const useDesktopStore = defineStore('desktop', () => {
   const taskBarIconAlign =
     ref<GetPropType<DesktopStore, 'taskBarIconAlign'>>('left');
 
+  // 窗口透明度
+  const windowTransparency =
+    ref<GetPropType<DesktopStore, 'WindowTransparency'>>(100);
+
   return {
     taskBarPosition,
     setTaskBarPosition,
@@ -111,6 +115,7 @@ export const useDesktopStore = defineStore('desktop', () => {
     compTransitionMode,
     theme,
     taskBarIconAlign,
+    windowTransparency,
   };
 });
 

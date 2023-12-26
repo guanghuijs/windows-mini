@@ -3,13 +3,12 @@ import {
   Theme,
   TaskBar,
   Desktop,
-  Echarts,
-  BMap,
   Window,
 } from '@packages/static/modules/individuation';
 import { renderIcon } from '@packages/utils';
 
-import { MdSubway, MdStar, MdPhotos, MdRainy } from '@vicons/ionicons4';
+import { MdSubway, MdStar } from '@vicons/ionicons4';
+import { ModuleOrderNo } from '@app/router/constants';
 
 const individuationRouter: CreateWindowOptions = {
   path: 'individuation',
@@ -17,6 +16,7 @@ const individuationRouter: CreateWindowOptions = {
     title: '个性化',
     way: 'component',
     icon: renderIcon(MdSubway),
+    orderNumber: ModuleOrderNo.INDIVIDUATION,
   },
   children: [
     {

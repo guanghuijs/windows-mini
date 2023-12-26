@@ -1,4 +1,5 @@
 import { h } from 'vue';
+
 import type { CreateWindowOptions } from '@packages/types/layout';
 import { renderIcon } from '@packages/utils';
 import { ModuleOrderNo } from '../constants';
@@ -6,12 +7,12 @@ import { ModuleOrderNo } from '../constants';
 import { MdSubway } from '@vicons/ionicons4';
 
 const plugInTestingRouter: CreateWindowOptions = {
-  path: 'about',
+  path: 'blog',
   meta: {
-    title: '关于',
+    title: '博客',
     way: 'component',
     icon: renderIcon(MdSubway),
-    orderNumber: ModuleOrderNo.ABOUT,
+    orderNumber: ModuleOrderNo.BLOGS,
   },
   component: h('iframe', {
     width: '100%',
@@ -19,7 +20,7 @@ const plugInTestingRouter: CreateWindowOptions = {
     style: {
       border: 'none',
     },
-    src: 'https://guanghuijs.gitee.io/gh-blogs/uiIntro.html',
+    src: 'https://guanghuijs.gitee.io/gh-blogs/',
   }),
 };
 export default plugInTestingRouter;

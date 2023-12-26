@@ -1,4 +1,4 @@
-import type { CreateWindowOptions } from '@packages/layout';
+import type { CreateWindowOptions } from '@packages/types/layout';
 const modules = import.meta.globEager('./modules/**/*.ts');
 const menus: Array<CreateWindowOptions> = [];
 

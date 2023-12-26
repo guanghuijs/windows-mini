@@ -42,7 +42,9 @@
     >
       <div
         class="item"
-        v-for="item in meta.menus"
+        v-for="item in meta.menus.sort(
+          (a, b) => a.meta.orderNumber - b.meta.orderNumber
+        )"
         :key="item.path"
         @click="open(item)"
       >
@@ -71,8 +73,12 @@
     }
     .desktop-cont {
       display: flex;
-      padding: 20px;
+      padding: 10px;
+      flex-direction: column;
+      flex-wrap: wrap;
       .item {
+        width: 60px;
+        height: 60px;
         user-select: none;
         font-size: 12px;
         text-align: center;
@@ -81,17 +87,21 @@
         flex-direction: column;
         justify-content: center;
         color: v-bind(primaryColor);
+        cursor: pointer;
         i {
           font-size: 30px;
+        }
+        div {
+          margin-top: 3px;
         }
       }
     }
     .desktop-cont-taskbar-top {
-      padding-top: 50px;
+      padding-top: 40px;
     }
 
     .desktop-cont-taskbar-bottom {
-      padding-bottom: 50px;
+      padding-bottom: 40px;
     }
   }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { NCard, NSpace, NSelect, NCheckbox } from 'naive-ui';
+  import { NCard, NSpace, NSelect, NSwitch } from 'naive-ui';
   import {
     useDesktopStore,
     useDesktopStoreRefs,
@@ -37,7 +37,7 @@
         />
       </template>
     </n-card>
-    <n-card title="任务栏对齐方式" size="small">
+    <n-card title="任务栏图标对齐方式" size="small">
       <template #header-extra>
         <n-select
           v-model:value="value.alignment"
@@ -46,8 +46,14 @@
         />
       </template>
     </n-card>
-    <n-card size="small">
-      <NCheckbox v-model:checked="value.hiddenWin">隐藏win图标</NCheckbox>
+    <n-card title="隐藏win图标" size="small">
+      <template #header-extra>
+        <n-switch size="medium">
+          <template #icon>
+            <img style="width: 100%; height: 100%" src="logo.webp" />
+          </template>
+        </n-switch>
+      </template>
     </n-card>
     <n-card title="任务栏快捷图标设置" size="small"> </n-card>
   </n-space>

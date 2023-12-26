@@ -75,8 +75,9 @@
     .main {
       flex: 1;
       height: 30px;
-      text-align: center;
-      transition: text-align 0.25s;
+      text-align: left;
+      display: flex;
+      align-items: center;
       i.win {
         font-size: 20px;
         cursor: pointer;
@@ -90,17 +91,18 @@
         cursor: pointer;
         color: v-bind(primaryColor);
         margin-left: 5px;
-        display: inline-block;
-        line-height: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
         i {
           font-size: 20px;
         }
       }
       &.center {
-        text-align: center;
+        justify-content: center;
       }
       &.right {
-        text-align: right;
+        justify-content: flex-end;
       }
     }
     .right {

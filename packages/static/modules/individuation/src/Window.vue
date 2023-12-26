@@ -18,17 +18,11 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { NCard, NSpace, NRadio, NImage, NSwitch } from 'naive-ui';
-  import { bgs } from '@packages/static';
+  import { NCard, NSpace, NRadio, NSlider } from 'naive-ui';
   import { useDesktopStoreRefs } from '@packages/layout/desktop/store';
-  const { desktopBg, isQuickToggleBg, compTransitionMode } =
-    useDesktopStoreRefs();
+  const { compTransitionMode, windowTransparency } = useDesktopStoreRefs();
 
   const tranFlag = ref(true);
-
-  const desktopChange = (src: string) => {
-    desktopBg.value = `url(${src})`;
-  };
 
   const toggleMode = (m) => {
     compTransitionMode.value = m;
@@ -38,7 +32,9 @@
 
 <template>
   <n-space vertical>
-    <n-card title="窗口透明度" size="small"> </n-card>
+    <n-card title="窗口透明度" size="small">
+      <n-slider v-model:value="windowTransparency" />
+    </n-card>
     <n-card title="打开窗口默认全屏" size="small"> </n-card>
     <n-card title="窗口组件过渡动画" size="small">
       <transition :name="compTransitionMode" mode="out-in">

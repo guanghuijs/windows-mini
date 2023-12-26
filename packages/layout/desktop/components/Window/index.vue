@@ -8,9 +8,10 @@
   import Main from './Main.vue';
   import { useWindowSize, useDebounceFn } from '@vueuse/core';
 
-  const { zIndex, taskBarPosition } = useDesktopStoreRefs();
+  const { zIndex, taskBarPosition, windowTransparency } = useDesktopStoreRefs();
   const { addZIndex, excursionWindowPoint } = useDesktopStore();
 
+  const winOpacity = computed(() => windowTransparency.value * 0.01);
   watch(taskBarPosition, () => {
     edgeDetectionRef();
   });
@@ -208,6 +209,7 @@
     flex-direction: column;
     transition: transform 0.25s, opacity 0.25s, width 0.25s, height 0.25s,
       left 0.25s, top 0.25s;
+    opacity: v-bind(winOpacity);
 
     .top {
       height: 34px;
