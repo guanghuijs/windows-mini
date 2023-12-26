@@ -22,3 +22,7 @@ export function mapRouter(
 export function renderIcon(icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) });
 }
+
+export function renderIconfont(iconName: string) {
+  return () => h('i', { class: `iconfont ${iconName}` });
+}

@@ -19,13 +19,15 @@
     defaultView?: string;
   }>();
   const activeKey = ref<string>(
-    props.defaultView ? props.defaultView : props.options.children[0].path
+    props.defaultView
+      ? props.defaultView
+      : props.options.children && props.options.children[0].path
   );
   const component = computed(() => {
     const current = props.options.children?.find(
       (r) => r.path === activeKey.value
     );
-    return current.component;
+    return current?.component;
   });
   const collapsed = ref(false);
   const menuOptions = computed<MenuOption[]>(() => {
@@ -59,7 +61,7 @@
     :theme-overrides="themeOverrides"
   >
     <n-layout class="window-container">
-      <n-layout has-sider>
+      <n-layout v-if="!options.component" has-sider>
         <n-layout-sider
           :width="240"
           show-trigger
@@ -78,7 +80,8 @@
         </n-layout-sider>
         <n-layout>
           <div class="right-container">
-            <Transition :name="compTransitionMode" mode="out-in">
+            <component v-if="options.component" :is="options.component" />
+            <Transition v-else :name="compTransitionMode" mode="out-in">
               <keep-alive>
                 <component :is="component" />
               </keep-alive>

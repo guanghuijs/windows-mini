@@ -5,6 +5,7 @@ import {
   Desktop,
   Echarts,
   BMap,
+  Window,
 } from '@packages/static/modules/individuation';
 import { renderIcon } from '@packages/utils';
 
@@ -43,19 +44,11 @@ const individuationRouter: CreateWindowOptions = {
       },
     },
     {
-      path: 'e-chart',
-      component: Echarts,
+      path: 'window',
+      component: Window,
       meta: {
-        title: 'e-chart',
-        icon: renderIcon(MdPhotos),
-      },
-    },
-    {
-      path: 'bMap',
-      component: BMap,
-      meta: {
-        title: 'bMap',
-        icon: renderIcon(MdRainy),
+        title: '窗口设置',
+        icon: renderIcon(MdSubway),
       },
     },
   ],
