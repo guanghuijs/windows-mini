@@ -2,9 +2,9 @@ import type { RouteRecordRaw } from 'vue-router';
 
 export type CreateWindowOptions = RouteRecordRaw & {
   meta?: {
-    title: string;
-    icon: string;
-    orderNumber: number;
+    title?: string;
+    icon?: string;
+    orderNumber?: number;
     openByTab?: boolean;
     menuState?: 'destroy' | 'hidden';
     way?: 'component';

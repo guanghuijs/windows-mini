@@ -40,10 +40,15 @@
         class="minimize-item"
         @click="minimizeOpen(item)"
         v-for="item in minimizeList"
-        :key="item"
-        :title="item?.meta.title"
+        :key="item[0].path"
+        :title="item[0]?.meta.title"
       >
-        <component :is="item?.meta.icon"></component>
+        <component :is="item[0]?.meta.icon"></component>
+        <div class="minimize-content" style="font-size: 10px">
+          <div v-for="win in item" :key="win.path">
+            <component :is="win.comp"></component>
+          </div>
+        </div>
       </div>
     </div>
     <div class="right flex-star">
@@ -94,8 +99,33 @@
         height: 30px;
         display: flex;
         align-items: center;
+        position: relative;
         i {
           font-size: 20px;
+        }
+        .minimize-content {
+          width: 100%;
+          background: red;
+          height: 140px;
+          position: absolute;
+          bottom: -140px;
+          left: calc(50% - 40px);
+          opacity: 0;
+          transition: all 0.25s;
+          transform: scale(0);
+          :deep(.viewport) {
+            left: 0 !important;
+            top: 0 !important;
+            width: 1000% !important;
+            height: 1000% !important;
+            transform: scale(0.1);
+            transform-origin: 0 0;
+          }
+        }
+        &:hover .minimize-content {
+          z-index: initial;
+          opacity: 1;
+          transform: scale(1);
         }
       }
       &.center {

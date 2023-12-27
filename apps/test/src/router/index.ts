@@ -22,7 +22,7 @@ const routes: Array<CreateWindowOptions> = [
   {
     path: '/dashboard',
     component: Dashboard,
-    redirect: '/dashboard/individuation/taskbar',
+    redirect: '/dashboard/individuation/theme',
     meta: {
       menus,
     },

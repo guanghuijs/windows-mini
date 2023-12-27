@@ -7,7 +7,13 @@ import {
 } from '@packages/static/modules/individuation';
 import { renderIcon } from '@packages/utils';
 
-import { MdSubway, MdStar } from '@vicons/ionicons4';
+import {
+  IosImages,
+  LogoWindows,
+  IosDesktop,
+  IosColorPalette,
+  MdLaptop,
+} from '@vicons/ionicons4';
 import { ModuleOrderNo } from '@app/router/constants';
 
 const individuationRouter: CreateWindowOptions = {
@@ -15,40 +21,44 @@ const individuationRouter: CreateWindowOptions = {
   meta: {
     title: '个性化',
     way: 'component',
-    icon: renderIcon(MdSubway),
+    icon: renderIcon(IosImages),
     orderNumber: ModuleOrderNo.INDIVIDUATION,
   },
   children: [
     {
       path: 'theme',
+      name: 'theme',
       component: Theme,
       meta: {
         title: '主题设置',
-        icon: renderIcon(MdSubway),
+        icon: renderIcon(IosColorPalette),
       },
     },
     {
       path: 'desktop',
+      name: 'desktop',
       component: Desktop,
       meta: {
         title: '桌面设置',
-        icon: renderIcon(MdStar),
+        icon: renderIcon(IosDesktop),
       },
     },
     {
       path: 'taskbar',
+      name: 'taskbar',
       component: TaskBar,
       meta: {
         title: '任务栏设置',
-        icon: renderIcon(MdSubway),
+        icon: renderIcon(LogoWindows),
       },
     },
     {
       path: 'window',
+      name: 'window',
       component: Window,
       meta: {
         title: '窗口设置',
-        icon: renderIcon(MdSubway),
+        icon: renderIcon(MdLaptop),
       },
     },
   ],

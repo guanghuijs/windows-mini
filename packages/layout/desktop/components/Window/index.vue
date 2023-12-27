@@ -147,7 +147,7 @@
 <template>
   <Transition @after-enter="onAfterEnter">
     <Vue3DraggableResizable
-      v-if="visible"
+      v-show="visible"
       ref="windowRef"
       class="viewport"
       :class="isMax ? `max ${taskBarPosition}` : ''"

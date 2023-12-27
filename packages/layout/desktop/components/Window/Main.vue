@@ -108,8 +108,12 @@
       display: none;
     }
     .right-container {
+      font-size: 0;
       padding: 20px;
       height: 100%;
+      &:has(iframe) {
+        padding: 0;
+      }
     }
   }
 </style>

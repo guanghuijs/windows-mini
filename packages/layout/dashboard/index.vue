@@ -13,16 +13,14 @@
 
   const activeKey = ref(fullPath.substring(fullPath.lastIndexOf('/') + 1));
   const collapsed = ref(false);
-
   const menuOptions: MenuOption[] = computed(() => {
-    return mapRouter(
-      meta?.menus,
-      fullPath.substring(0, fullPath.lastIndexOf('/'))
-    );
+    return mapRouter(meta?.menus);
   });
 
   const handleUpdateValue = (_, item: MenuOption) => {
-    router.push(item.key);
+    router.push({
+      name: item.name,
+    });
     activeKey.value = item.key;
   };
 </script>
@@ -57,11 +55,13 @@
           </div>
         </n-layout-header>
         <div class="right-container">
-          <Transition name="fade" mode="out-in">
-            <keep-alive>
-              <router-view></router-view>
-            </keep-alive>
-          </Transition>
+          <router-view v-slot="{ Component }">
+            <Transition name="fade" mode="out-in">
+              <keep-alive>
+                <component :is="Component"></component>
+              </keep-alive>
+            </Transition>
+          </router-view>
         </div>
       </n-layout>
     </n-layout>
@@ -96,6 +96,14 @@
     }
     .right-container {
       padding: 20px;
+      height: calc(100% - 42px);
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      &:has(iframe) {
+        padding: 0;
+      }
     }
   }
 </style>

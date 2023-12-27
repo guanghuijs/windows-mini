@@ -23,10 +23,12 @@ export function createWindow(
   console.log(windowPoint.value);
   div.style.zIndex = zIndex.value;
   document.querySelector('.desktop')?.appendChild(div);
-  render(
-    h(Window, { options, defaultView, windowPoint: unref(windowPoint) }),
-    document.querySelector(`div[winid=${winId}]`)!
-  );
+  const win = h(Window, {
+    options,
+    defaultView,
+    windowPoint: unref(windowPoint),
+  });
+  render(win, document.querySelector(`div[winid=${winId}]`)!);
   div.classList.add('window-id');
-  addMinimizeList(Object.assign(options, { el: div, winId }));
+  addMinimizeList(Object.assign(options, { el: div, winId, comp: win }));
 }

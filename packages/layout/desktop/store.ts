@@ -61,14 +61,19 @@ export const useDesktopStore = defineStore('desktop', () => {
   };
 
   // 最小化
-  const minimizeList = ref<CreateWindowOptions[]>([]);
+  const minimizeList = ref<CreateWindowOptions[][]>([]);
 
   /**
    * 桌面任务栏图标
    * @param minimizeMenu
    */
   const addMinimizeList = (minimizeMenu: CreateWindowOptions) => {
-    minimizeList.value.push(minimizeMenu);
+    const { path } = minimizeMenu;
+    const index = minimizeList.value.findIndex(
+      (item) => item.length && item[0]?.path === path
+    );
+    if (index === -1) minimizeList.value.push([minimizeMenu]);
+    else minimizeList.value[index].push(minimizeMenu);
   };
 
   // 主题颜色
