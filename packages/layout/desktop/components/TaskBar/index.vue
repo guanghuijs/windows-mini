@@ -40,16 +40,28 @@
         class="minimize-item"
         @click="minimizeOpen(item)"
         v-for="item in minimizeList"
-        :key="item[0].path"
-        :title="item[0]?.meta.title"
+        :key="item.path"
+        :title="item.meta.title"
       >
-        <component :is="item[0]?.meta.icon"></component>
+        <component :is="item.meta.icon"></component>
         <div class="minimize-content" style="font-size: 10px">
-          <div v-for="win in item" :key="win.path">
-            <component :is="win.comp"></component>
-          </div>
+          <component :is="item.comp"></component>
         </div>
       </div>
+      <!--      <div-->
+      <!--        class="minimize-item"-->
+      <!--        @click="minimizeOpen(item)"-->
+      <!--        v-for="item in minimizeList"-->
+      <!--        :key="item[0].path"-->
+      <!--        :title="item[0]?.meta.title"-->
+      <!--      >-->
+      <!--        <component :is="item[0]?.meta.icon"></component>-->
+      <!--        <div class="minimize-content" style="font-size: 10px">-->
+      <!--          <div v-for="win in item" :key="win.path">-->
+      <!--            <component :is="win.comp"></component>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
     <div class="right flex-star">
       <div class="battery" :title="`${battery.level * 100}%`">
@@ -104,12 +116,10 @@
           font-size: 20px;
         }
         .minimize-content {
-          width: 100%;
-          background: red;
-          height: 140px;
+          width: 150px;
+          height: 100px;
           position: absolute;
-          bottom: -140px;
-          left: calc(50% - 40px);
+          left: calc(50% - 75px);
           opacity: 0;
           transition: all 0.25s;
           transform: scale(0);
@@ -176,8 +186,20 @@
   }
   .task-bar-bottom {
     inset: auto 0 0 0;
+    .minimize-item {
+      .minimize-content {
+        bottom: initial;
+        top: -100px;
+      }
+    }
   }
   .task-bar-top {
     inset: 0 0 auto 0;
+    .minimize-item {
+      .minimize-content {
+        top: initial;
+        bottom: -100px;
+      }
+    }
   }
 </style>

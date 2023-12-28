@@ -68,6 +68,7 @@
   );
 
   const visible = ref(false);
+  const isClose = ref(false);
   const isMax = ref(false);
 
   const draggable = ref(true);
@@ -142,10 +143,32 @@
     minW.value = 700;
     minH.value = 500;
   };
+
+  // 最小化窗口
+  const minimizeToggle = () => {
+    visible.value = !unref(visible);
+  };
+
+  // 关闭窗口
+  const close = () => {
+    visible.value = !unref(visible);
+    isClose.value = true;
+  };
+
+  const afterLeave = (el: HTMLElement) => {
+    if (unref(isClose)) {
+      getParentTarget(el)?.remove();
+    }
+  };
+
+  defineExpose({
+    minimizeToggle,
+    close,
+  });
 </script>
 
 <template>
-  <Transition @after-enter="onAfterEnter">
+  <Transition @after-enter="onAfterEnter" @after-leave="afterLeave">
     <Vue3DraggableResizable
       v-show="visible"
       ref="windowRef"
@@ -173,13 +196,13 @@
           {{ options?.meta?.title }}
         </div>
         <div class="winOpt flex-star">
-          <div class="drag-cancel" @click="visible = false">
+          <div class="drag-cancel" @click="minimizeToggle">
             <i class="iconfont icon-winmin"></i>
           </div>
           <div class="drag-cancel" @click="isMax = !isMax">
             <i class="iconfont" :class="isMax ? 'icon-inmax' : 'icon-max'"></i>
           </div>
-          <div class="drag-cancel">
+          <div class="drag-cancel" @click="close">
             <i class="iconfont icon-guanbi"></i>
           </div>
         </div>

@@ -68,12 +68,13 @@ export const useDesktopStore = defineStore('desktop', () => {
    * @param minimizeMenu
    */
   const addMinimizeList = (minimizeMenu: CreateWindowOptions) => {
-    const { path } = minimizeMenu;
-    const index = minimizeList.value.findIndex(
-      (item) => item.length && item[0]?.path === path
-    );
-    if (index === -1) minimizeList.value.push([minimizeMenu]);
-    else minimizeList.value[index].push(minimizeMenu);
+    // const { path } = minimizeMenu;
+    // const index = minimizeList.value.findIndex(
+    //   (item) => item.length && item[0]?.path === path
+    // );
+    // if (index === -1) minimizeList.value.push([minimizeMenu]);
+    // else minimizeList.value[index].push(minimizeMenu);
+    minimizeList.value.push(minimizeMenu);
   };
 
   // 主题颜色

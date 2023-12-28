@@ -98,14 +98,16 @@ const hh: Pick<HH, 'name' | 'age'> = { name: '', age: 0 };
 const hhh: Omit<HH, 'name' | 'age'> = { sex: 66 };
 const hhhh: Partial<HH> = { name: '' };
 
-type GetTypeBase = {
+type Window = {
   position: 'left' | 'top';
   size: 'big' | 'small' | 'middle';
 };
 
 // [P in K]: T[P];
-type getType<T, K extends keyof T> = T extends { [P in K]: infer R } ? R : T;
-type AAA = getType<GetTypeBase, 'position'>;
-type BBB = getType<GetTypeBase, 'size'>;
+type getType<T, K extends keyof T> = T extends { [P in K]: infer R }
+  ? R
+  : never;
+type AAA = getType<Window, 'position'>;
+type BBB = Extract<keyof Window, 'size'>;
 const aaa: AAA = 'left';
 const bbb: BBB = 'small';

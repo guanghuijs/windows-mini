@@ -1,6 +1,12 @@
 <script setup lang="ts">
   import { useDesktopStoreRefs } from '../../store';
-  const { taskBarPosition, systemMenuDirection } = useDesktopStoreRefs();
+  const {
+    taskBarPosition,
+    systemMenuDirection,
+    theme,
+    taskBarIconAlign,
+    primaryColor,
+  } = useDesktopStoreRefs();
 
   withDefaults(
     defineProps<{
@@ -22,7 +28,7 @@
       <div
         v-show="show"
         class="system-menu"
-        :class="`system-menu-${taskBarPosition}`"
+        :class="`system-menu-${taskBarPosition} ${theme} ${taskBarIconAlign}`"
       >
         {{ taskBarPosition }}
       </div>
@@ -36,16 +42,31 @@
     width: 100vw;
     height: calc(100vh - 30px);
     top: 0;
-    left: 0;
     z-index: calc(infinity);
   }
   .system-menu {
     width: 40vw;
     height: 60vh;
-    background: rgba(255, 255, 255, 0.8);
     filter: blur(-20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: fixed;
+    color: v-bind(primaryColor);
+    &.light {
+      background: rgba(255, 255, 255, 0.8);
+    }
+    &.dark {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    &.left {
+      left: 0;
+    }
+    &.center {
+      left: calc(50% - 20vw);
+    }
+    &.right {
+      left: initial;
+      right: 0;
+    }
   }
 
   .system-menu-top {
