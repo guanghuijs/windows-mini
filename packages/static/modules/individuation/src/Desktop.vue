@@ -47,7 +47,7 @@
       <template #header-extra>
         <n-switch size="medium" v-model:value="isQuickToggleBg">
           <template #icon>
-            <img style="width: 100%; height: 100%" src="logo.webp" />
+            <img style="width: 100%; height: 100%" src="/public/logo.webp" />
           </template>
         </n-switch>
       </template>

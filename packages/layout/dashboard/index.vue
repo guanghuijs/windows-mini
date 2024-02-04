@@ -38,7 +38,7 @@
         bordered
       >
         <div class="project-info flex-star" @click="router.push('/desktop')">
-          <img src="logo.webp" alt="" />
+          <img src="/public/logo.webp" alt="" />
           <div v-show="!collapsed">Admin</div>
         </div>
         <n-menu
