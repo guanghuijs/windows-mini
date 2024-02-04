@@ -10,9 +10,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@packages/layout": "workspace:*",
     "@packages/utils": "workspace:*",
-    "@packages/static": "workspace:*"
+    "@packages/static": "workspace:*",
+    "@packages/types": "workspace:*"
   }
 }

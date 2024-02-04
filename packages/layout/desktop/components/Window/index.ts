@@ -13,9 +13,8 @@ export function createWindow(
   }
 
   const { zIndex, windowPoint } = useDesktopStoreRefs();
-  const { addZIndex, excursionWindowPoint, addMinimizeList } =
-    useDesktopStore();
-  addZIndex();
+  const { excursionWindowPoint, addMinimizeList } = useDesktopStore();
+  zIndex.value++;
   excursionWindowPoint('new');
   const winId = 'winid' + new Date().getTime();
   const div = document.createElement('div');

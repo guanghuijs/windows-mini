@@ -1,17 +1,20 @@
 <script setup lang="ts">
-  import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css';
+  import { onMounted, ref, unref } from 'vue';
   import { useRoute } from 'vue-router';
-  import { ref } from 'vue';
+
+  import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css';
+  import type { CreateWindowOptions } from '@packages/types/layout';
+
   import { TaskBar, SystemMenu } from './components';
   import { createWindow } from './components/Window';
-  import type { CreateWindowOptions } from '@packages/types/layout';
   import { useDesktopStore, useDesktopStoreRefs } from './store';
 
-  const { desktopBgNext } = useDesktopStore();
-  const { taskBarPosition, desktopBg, isQuickToggleBg, primaryColor } =
+  const { taskBarPosition, desktopBg, isQuickToggleBg, primaryColor, theme } =
     useDesktopStoreRefs();
-  const systemMenuVisible = ref<boolean>(false);
+  const { desktopBgNext } = useDesktopStore();
   const { meta } = useRoute();
+
+  const systemMenuVisible = ref<boolean>(false);
 
   const systemMenuToggle = () => {
     systemMenuVisible.value = !systemMenuVisible.value;
@@ -20,6 +23,12 @@
   const open = (options: CreateWindowOptions) => {
     createWindow(options);
   };
+
+  onMounted(() => {
+    if (unref(theme) === 'dark') {
+      document.querySelector('body')?.classList.add('dark');
+    }
+  });
 </script>
 
 <template>

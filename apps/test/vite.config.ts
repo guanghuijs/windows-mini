@@ -9,22 +9,17 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 export default defineConfig(() => {
   return {
     base: './',
-    plugins: [
-      vue(),
-      vueJsx(),
-      // Pages({
-      //   dirs: './src/views', //指定生成路由的目录
-      //   extensions: ['vue'], //文件后缀
-      //   exclude: ['**/src/*.vue'], //可以排除指定目录
-      // }),
-    ],
+    plugins: [vue(), vueJsx()],
     resolve: {
       alias: {
         '@app': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
-    server: {
-      host: '0.0.0.0',
+    define: {
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'true',
     },
+    // server: {
+    //   host: '0.0.0.0',
+    // },
   };
 });

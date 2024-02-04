@@ -1,12 +1,14 @@
 <script setup lang="ts">
+  import { computed } from 'vue';
   import { useDesktopStoreRefs } from '../../store';
-  const {
-    taskBarPosition,
-    systemMenuDirection,
-    theme,
-    taskBarIconAlign,
-    primaryColor,
-  } = useDesktopStoreRefs();
+  const { taskBarPosition, theme, taskBarIconAlign, primaryColor } =
+    useDesktopStoreRefs();
+
+  const systemMenuDirection = computed(() => {
+    return taskBarPosition.value === 'bottom'
+      ? 'translateY(30px)'
+      : 'translateY(-30px)';
+  });
 
   withDefaults(
     defineProps<{

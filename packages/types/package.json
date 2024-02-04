@@ -11,9 +11,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "files": ["env.d.ts"],
-  "include": ["env.d.ts"],
-  "dependencies": {
+  "files": [
+    "env.d.ts"
+  ],
+  "include": [
+    "env.d.ts"
+  ],
+  "devDependencies": {
     "@packages/static": "workspace:*",
     "@packages/utils": "workspace:*",
     "@packages/types": "workspace:*"

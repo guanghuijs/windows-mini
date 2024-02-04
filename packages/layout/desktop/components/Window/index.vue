@@ -9,7 +9,7 @@
   import { useWindowSize, useDebounceFn } from '@vueuse/core';
 
   const { zIndex, taskBarPosition, windowTransparency } = useDesktopStoreRefs();
-  const { addZIndex, excursionWindowPoint } = useDesktopStore();
+  const { excursionWindowPoint } = useDesktopStore();
 
   const winOpacity = computed(() => windowTransparency.value * 0.01);
   watch(taskBarPosition, () => {
@@ -131,7 +131,7 @@
 
   const clickFn = (e: MouseEvent) => {
     const dom = getParentTarget(e.target as HTMLElement);
-    addZIndex();
+    zIndex.value++;
     dom.style.zIndex = zIndex.value;
   };
 
@@ -224,6 +224,7 @@
 
 <style scoped lang="less">
   .viewport {
+    min-width: 600px;
     width: calc(100% - 300px);
     height: calc(100% - 200px);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);

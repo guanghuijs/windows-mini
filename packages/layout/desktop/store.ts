@@ -1,36 +1,55 @@
-import { computed, ref, unref } from 'vue';
+import { ref, unref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { Random } from 'mockjs';
 
-import { getLocalStore, setLocalStore } from '@packages/utils';
-import { GetPropType } from '@packages/types';
+import { PickProp } from '@packages/types';
 import { DesktopStore, CreateWindowOptions } from '@packages/types/layout';
 import { bgs } from '@packages/static/background';
+import { winStoreWithLocal } from './utils';
 
 export const useDesktopStore = defineStore('desktop', () => {
-  const taskBarPosition = ref(
-    getLocalStore<DesktopStore>('desktopStore').taskBarPosition || 'bottom'
+  const primaryColor = winStoreWithLocal<
+    PickProp<DesktopStore, 'primaryColor'>
+  >('primaryColor', '#008000');
+
+  const desktopBg = winStoreWithLocal<PickProp<DesktopStore, 'desktopBg'>>(
+    'desktopBg',
+    `url(${bgs[0]})`
   );
 
-  const systemMenuDirection = computed(() => {
-    return taskBarPosition.value === 'bottom'
-      ? 'translateY(30px)'
-      : 'translateY(-30px)';
-  });
-
-  const setTaskBarPosition = (
-    position: GetPropType<DesktopStore, 'taskBarPosition'>
-  ) => {
-    const store = getLocalStore<DesktopStore>('desktopStore');
-    store.taskBarPosition = position;
-    setLocalStore('desktopStore', store);
-    taskBarPosition.value = position;
+  const desktopBgNext = () => {
+    desktopBg.value = `url(${bgs[Random.integer(0, bgs.length - 1)]})`;
   };
 
+  const isQuickToggleBg = winStoreWithLocal<
+    PickProp<DesktopStore, 'isQuickToggleBg'>
+  >('isQuickToggleBg', false);
+
+  const taskBarPosition = winStoreWithLocal<
+    PickProp<DesktopStore, 'taskBarPosition'>
+  >('taskBarPosition', 'bottom');
+
+  const compTransitionMode = winStoreWithLocal<
+    PickProp<DesktopStore, 'compTransitionMode'>
+  >('compTransitionMode', 'opacity');
+
+  const theme = winStoreWithLocal<PickProp<DesktopStore, 'theme'>>(
+    'theme',
+    'light'
+  );
+
+  const taskBarIconAlign = winStoreWithLocal<
+    PickProp<DesktopStore, 'taskBarIconAlign'>
+  >('taskBarIconAlign', 'center');
+
+  const windowTransparency = winStoreWithLocal<
+    PickProp<DesktopStore, 'windowTransparency'>
+  >('windowTransparency', 100);
+
+  /**
+   * 窗口最高层级
+   */
   const zIndex = ref(20);
-  const addZIndex = () => {
-    zIndex.value++;
-  };
 
   // 窗口打开偏移坐标
   const windowPoint = ref({
@@ -77,39 +96,9 @@ export const useDesktopStore = defineStore('desktop', () => {
     minimizeList.value.push(minimizeMenu);
   };
 
-  // 主题颜色
-  const primaryColor = ref('#008000');
-
-  //桌面背景
-  const desktopBg = ref(`url(${bgs[Random.integer(0, bgs.length - 1)]})`);
-
-  // 随机背景
-  const desktopBgNext = () => {
-    desktopBg.value = `url(${bgs[Random.integer(0, bgs.length - 1)]})`;
-  };
-
-  // 开启桌面快捷切换背景快捷键
-  const isQuickToggleBg = ref(true);
-
-  const compTransitionMode = ref('opacity');
-
-  // 桌面主题
-  const theme = ref<GetPropType<DesktopStore, 'theme'>>('light');
-
-  // 任务栏图标对齐方式
-  const taskBarIconAlign =
-    ref<GetPropType<DesktopStore, 'taskBarIconAlign'>>('left');
-
-  // 窗口透明度
-  const windowTransparency =
-    ref<GetPropType<DesktopStore, 'WindowTransparency'>>(100);
-
   return {
     taskBarPosition,
-    setTaskBarPosition,
-    systemMenuDirection,
     zIndex,
-    addZIndex,
     windowPoint,
     excursionWindowPoint,
     minimizeList,

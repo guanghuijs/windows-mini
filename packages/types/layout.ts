@@ -23,10 +23,39 @@ export type CreateWindowOptions = RouteRecordRaw & {
 // }
 
 export type DesktopStore = {
-  taskBarPosition: 'top' | 'bottom';
-  theme: 'light' | 'dark';
-  isShowWin: boolean;
-  taskBarIconAlign: 'left' | 'center' | 'right';
+  /**
+   * 主题颜色
+   */
+  primaryColor: string;
+  /**
+   * 桌面背景
+   */
   desktopBg: string;
-  WindowTransparency: number;
+  /**
+   开启桌面快捷切换背景快捷键
+    */
+  isQuickToggleBg: boolean;
+  /**
+   * 任务栏位置
+   * top 顶部
+   * bottom 底部
+   */
+  taskBarPosition: 'top' | 'bottom';
+  /**
+   * 组件过渡动画切换 'opacity'  'rotate'  'fade'  'bounce'
+   */
+  compTransitionMode: 'opacity' | 'rotate' | 'fade' | 'bounce';
+  /**
+   * 桌面主题 light亮色 dark暗黑
+   */
+  theme: 'light' | 'dark';
+  /**
+   * 任务栏图标对齐方式 'left' 'center' 'right'
+   */
+  taskBarIconAlign: 'left' | 'center' | 'right';
+  /**
+   * 窗口组件透明度
+   */
+  windowTransparency: number;
+  isShowWin: boolean;
 };

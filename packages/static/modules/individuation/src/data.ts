@@ -1,5 +1,3 @@
-import { selectField } from '@packages/utils/src/form';
-
 export const taskBarPositionOptions = [
   {
     label: '顶部',

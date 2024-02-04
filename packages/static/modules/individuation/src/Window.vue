@@ -33,7 +33,7 @@
 <template>
   <n-space vertical>
     <n-card title="窗口透明度" size="small">
-      <n-slider v-model:value="windowTransparency" />
+      <n-slider v-model:value="windowTransparency" :min="60" />
     </n-card>
     <n-card title="打开窗口默认全屏" size="small"> </n-card>
     <n-card title="窗口组件过渡动画" size="small">
