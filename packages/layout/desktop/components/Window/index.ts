@@ -12,8 +12,17 @@ export function createWindow(
     return;
   }
 
-  const { zIndex, windowPoint } = useDesktopStoreRefs();
+  const { zIndex, windowPoint, minimizeList } = useDesktopStoreRefs();
   const { excursionWindowPoint, addMinimizeList } = useDesktopStore();
+
+  const index = unref(minimizeList).findIndex(
+    (item) => item.length && item[0]?.path === options.path
+  );
+  if (index !== -1 && unref(minimizeList)[index].length >= 2) {
+    console.error('同一模块最多打开两个窗口');
+    return;
+  }
+
   zIndex.value++;
   excursionWindowPoint('new');
   const winId = 'winid' + new Date().getTime();

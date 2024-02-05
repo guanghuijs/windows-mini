@@ -49,7 +49,7 @@ export const useDesktopStore = defineStore('desktop', () => {
   /**
    * 窗口最高层级
    */
-  const zIndex = ref(20);
+  const zIndex = ref<number>(20);
 
   // 窗口打开偏移坐标
   const windowPoint = ref({
@@ -63,37 +63,71 @@ export const useDesktopStore = defineStore('desktop', () => {
    * @param point
    */
   const excursionWindowPoint = (
-    flag: 'new' | 'drag',
+    flag: 'new' | 'drag' | 'close',
     point: { x: number; y: number }
   ) => {
     const { x: starX, y: starY } = unref(windowPoint);
+    console.log(!minimizeList.value.length);
     if (flag === 'new') {
       windowPoint.value = {
         x: starX + 20,
         y: starY + 20,
       };
+      if (minimizeList.value.length === 0) {
+        windowPoint.value = {
+          x: 130,
+          y: 80,
+        };
+      }
     }
 
     if (flag === 'drag') {
       windowPoint.value = point;
     }
+
+    if (flag === 'close') {
+      windowPoint.value = point;
+    }
   };
 
   // 最小化
-  const minimizeList = ref<CreateWindowOptions[][]>([]);
+  const minimizeList = ref<Array<CreateWindowOptions>>([]);
 
   /**
    * 桌面任务栏图标
    * @param minimizeMenu
    */
   const addMinimizeList = (minimizeMenu: CreateWindowOptions) => {
-    // const { path } = minimizeMenu;
-    // const index = minimizeList.value.findIndex(
-    //   (item) => item.length && item[0]?.path === path
-    // );
-    // if (index === -1) minimizeList.value.push([minimizeMenu]);
-    // else minimizeList.value[index].push(minimizeMenu);
-    minimizeList.value.push(minimizeMenu);
+    const { path } = minimizeMenu;
+    const index = unref(minimizeList).findIndex(
+      (item) => item.length && item[0]?.path === path
+    );
+    if (index === -1) {
+      minimizeList.value.push([minimizeMenu]);
+    } else {
+      if (unref(minimizeList)[index].length < 2) {
+        minimizeList.value[index].push(minimizeMenu);
+      }
+    }
+    // minimizeList.value.push(minimizeMenu);
+  };
+
+  /**
+   * 窗口关闭
+   * @param minimizeMenu
+   */
+  const minimizeWithClose = (minimizeMenu: CreateWindowOptions) => {
+    const moduleIndex = unref(minimizeList).findIndex(
+      (item) => item.length && item[0]?.path === minimizeMenu.path
+    );
+    const winIndex = unref(minimizeList)[moduleIndex].findIndex(
+      (item) => item.winId === minimizeMenu.winId
+    );
+    if (unref(minimizeList)[moduleIndex].length > 1) {
+      minimizeList.value[moduleIndex].splice(winIndex, 1);
+    } else {
+      minimizeList.value.splice(moduleIndex, 1);
+    }
   };
 
   return {
@@ -111,6 +145,7 @@ export const useDesktopStore = defineStore('desktop', () => {
     theme,
     taskBarIconAlign,
     windowTransparency,
+    minimizeWithClose,
   };
 });
 

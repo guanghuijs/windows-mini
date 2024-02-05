@@ -44,7 +44,7 @@
     width: 100vw;
     height: calc(100vh - 30px);
     top: 0;
-    z-index: calc(infinity);
+    z-index: 999999;
   }
   .system-menu {
     width: 40vw;

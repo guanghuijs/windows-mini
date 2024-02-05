@@ -8,8 +8,9 @@
   import Main from './Main.vue';
   import { useWindowSize, useDebounceFn } from '@vueuse/core';
 
-  const { zIndex, taskBarPosition, windowTransparency } = useDesktopStoreRefs();
-  const { excursionWindowPoint } = useDesktopStore();
+  const { zIndex, taskBarPosition, windowTransparency, minimizeList } =
+    useDesktopStoreRefs();
+  const { excursionWindowPoint, minimizeWithClose } = useDesktopStore();
 
   const winOpacity = computed(() => windowTransparency.value * 0.01);
   watch(taskBarPosition, () => {
@@ -158,6 +159,8 @@
   const afterLeave = (el: HTMLElement) => {
     if (unref(isClose)) {
       getParentTarget(el)?.remove();
+      minimizeWithClose(props.options);
+      excursionWindowPoint('close', { x: unref(x), y: unref(y) });
     }
   };
 

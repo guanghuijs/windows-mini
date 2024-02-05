@@ -7,10 +7,9 @@
   const battery = ref<any>(0);
   const timer = ref<Interval | null>(null);
 
-  const { taskBarPosition, minimizeList, primaryColor, taskBarIconAlign } =
+  const { taskBarPosition, primaryColor, minimizeList, taskBarIconAlign } =
     useDesktopStoreRefs();
   const formatted = useDateFormat(useNow(), 'HH:mm:ss');
-
   onMounted(() => {
     battery.value = getBattery().then((Battery) => {
       battery.value = Battery;
@@ -40,28 +39,12 @@
         class="minimize-item"
         @click="minimizeOpen(item)"
         v-for="item in minimizeList"
-        :key="item.path"
-        :title="item.meta.title"
+        :key="item[0]?.path"
+        :title="item[0]?.meta.title"
       >
-        <component :is="item.meta.icon"></component>
-        <div class="minimize-content" style="font-size: 10px">
-          <component :is="item.comp"></component>
-        </div>
+        <component :is="item[0]?.meta.icon"></component>
+        <div class="item-num">{{ item.length }}</div>
       </div>
-      <!--      <div-->
-      <!--        class="minimize-item"-->
-      <!--        @click="minimizeOpen(item)"-->
-      <!--        v-for="item in minimizeList"-->
-      <!--        :key="item[0].path"-->
-      <!--        :title="item[0]?.meta.title"-->
-      <!--      >-->
-      <!--        <component :is="item[0]?.meta.icon"></component>-->
-      <!--        <div class="minimize-content" style="font-size: 10px">-->
-      <!--          <div v-for="win in item" :key="win.path">-->
-      <!--            <component :is="win.comp"></component>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
     </div>
     <div class="right flex-star">
       <div class="battery" :title="`${battery.level * 100}%`">
@@ -78,7 +61,7 @@
 
 <style scoped lang="less">
   .task-bar {
-    z-index: calc(infinity);
+    z-index: 1000000;
     padding: 0 10px;
     position: fixed;
     width: 100%;
@@ -114,6 +97,19 @@
         position: relative;
         i {
           font-size: 20px;
+        }
+        .item-num {
+          width: 20px;
+          background: v-bind(primaryColor);
+          color: white;
+          font-size: 14px;
+          text-align: center;
+          line-height: 20px;
+          border-radius: 50%;
+          transform: scale(0.5);
+          position: absolute;
+          bottom: -2px;
+          right: -5px;
         }
         .minimize-content {
           width: 150px;
