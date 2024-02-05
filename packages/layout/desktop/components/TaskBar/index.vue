@@ -3,9 +3,11 @@
   import { useDateFormat, useNow } from '@vueuse/core';
   import { getBattery } from '../../utils';
   import { useDesktopStoreRefs } from '../../store';
+  import html2canvas from 'html2canvas';
 
   const battery = ref<any>(0);
   const timer = ref<Interval | null>(null);
+  const thumbnail = ref<string[]>([]);
 
   const { taskBarPosition, primaryColor, minimizeList, taskBarIconAlign } =
     useDesktopStoreRefs();
@@ -29,6 +31,14 @@
     clearInterval(timer.value);
     timer.value = null;
   });
+
+  const minimizeHover = (minimize) => {
+    thumbnail.value = [];
+    minimize.forEach(async (item) => {
+      const canvas = await html2canvas(item.el.querySelector('.vdr-container'));
+      thumbnail.value.push(canvas.toDataURL('image/jpeg', 1.0));
+    });
+  };
 </script>
 
 <template>
@@ -38,12 +48,18 @@
       <div
         class="minimize-item"
         @click="minimizeOpen(item)"
+        @mouseenter="minimizeHover(item)"
         v-for="item in minimizeList"
         :key="item[0]?.path"
         :title="item[0]?.meta.title"
       >
         <component :is="item[0]?.meta.icon"></component>
         <div class="item-num">{{ item.length }}</div>
+        <template v-if="thumbnail.length">
+          <div class="thumbnail">
+            <img v-for="url in thumbnail" :key="url" :src="url" alt="" />
+          </div>
+        </template>
       </div>
     </div>
     <div class="right flex-star">
@@ -95,6 +111,14 @@
         display: flex;
         align-items: center;
         position: relative;
+        .thumbnail {
+          position: absolute;
+          bottom: -70px;
+          display: flex;
+          img {
+            height: 70px;
+          }
+        }
         i {
           font-size: 20px;
         }

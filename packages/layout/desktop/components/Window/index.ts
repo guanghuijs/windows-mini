@@ -28,7 +28,6 @@ export function createWindow(
   const winId = 'winid' + new Date().getTime();
   const div = document.createElement('div');
   div.setAttribute('winId', winId);
-  console.log(windowPoint.value);
   div.style.zIndex = zIndex.value;
   document.querySelector('.desktop')?.appendChild(div);
   const win = h(Window, {
