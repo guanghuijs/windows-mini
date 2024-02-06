@@ -3,7 +3,7 @@
   // https://github.com/a7650/vue3-draggable-resizable
   import Vue3DraggableResizable from 'vue3-draggable-resizable';
   import { edgeDetection, getParentTarget } from './helper';
-  import type { CreateWindowOptions } from '@packages/types/layout';
+  import type {} from '@packages/types/layout';
   import { useDesktopStoreRefs, useDesktopStore } from '../../store';
   import Main from './Main.vue';
   import { useWindowSize, useDebounceFn } from '@vueuse/core';
@@ -146,8 +146,10 @@
   };
 
   // 最小化窗口
-  const minimizeToggle = () => {
+  const minimizeToggle = (windowOptions) => {
     visible.value = !unref(visible);
+    zIndex.value++;
+    windowOptions.el.style.zIndex = zIndex.value;
   };
 
   // 关闭窗口
@@ -156,6 +158,7 @@
     isClose.value = true;
   };
 
+  const minimizeCloseHelpe = ref<Win>();
   const afterLeave = (el: HTMLElement) => {
     if (unref(isClose)) {
       getParentTarget(el)?.remove();

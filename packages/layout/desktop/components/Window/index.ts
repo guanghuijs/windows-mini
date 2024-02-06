@@ -37,5 +37,6 @@ export function createWindow(
   });
   render(win, document.querySelector(`div[winid=${winId}]`)!);
   div.classList.add('window-id');
-  addMinimizeList(Object.assign(options, { el: div, winId, comp: win }));
+  const useOptions = { ...options, el: div, winId, comp: win };
+  addMinimizeList(useOptions);
 }

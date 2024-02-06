@@ -1,17 +1,16 @@
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref } from 'vue';
+  import { nextTick, onMounted, onUnmounted, ref } from 'vue';
   import { useDateFormat, useNow } from '@vueuse/core';
   import { getBattery } from '../../utils';
   import { useDesktopStoreRefs } from '../../store';
   import html2canvas from 'html2canvas';
 
-  const battery = ref<any>(0);
-  const timer = ref<Interval | null>(null);
-  const thumbnail = ref<string[]>([]);
-
+  const formatted = useDateFormat(useNow(), 'HH:mm:ss');
   const { taskBarPosition, primaryColor, minimizeList, taskBarIconAlign } =
     useDesktopStoreRefs();
-  const formatted = useDateFormat(useNow(), 'HH:mm:ss');
+
+  const timer = ref<Interval | null>(null);
+  const battery = ref<any>(0);
   onMounted(() => {
     battery.value = getBattery().then((Battery) => {
       battery.value = Battery;
@@ -22,22 +21,50 @@
       });
     }, 1000);
   });
-
-  const minimizeOpen = (item) => {
-    console.log(item);
-  };
-
   onUnmounted(() => {
     clearInterval(timer.value);
     timer.value = null;
   });
 
-  const minimizeHover = (minimize) => {
+  const thumbnail = ref<string[]>([]);
+  const currentIndex = ref(-1);
+  const isHover = ref(false);
+  const hoverTimerOut = ref();
+
+  const minimizeHover = (minimize, index: number) => {
+    currentIndex.value = index;
     thumbnail.value = [];
-    minimize.forEach(async (item) => {
-      const canvas = await html2canvas(item.el.querySelector('.vdr-container'));
-      thumbnail.value.push(canvas.toDataURL('image/jpeg', 1.0));
-    });
+    clearTimeout(hoverOutTimeout);
+    hoverTimerOut.value = setTimeout(() => {
+      minimize.forEach(async (item) => {
+        console.log(item);
+        const canvas = await html2canvas(
+          item.el.querySelector('.vdr-container')
+        );
+        thumbnail.value.push(canvas.toDataURL('image/jpeg', 1.0));
+      });
+    }, 500);
+  };
+
+  const hoverOutTimeout = ref();
+  const minimizeHoverOut = () => {
+    clearTimeout(hoverOutTimeout.value);
+    hoverOutTimeout.value = setTimeout(() => {
+      thumbnail.value = [];
+    }, 10000);
+  };
+  onUnmounted(() => {
+    clearTimeout(hoverOutTimeout.value);
+    clearTimeout(hoverTimerOut.value);
+    hoverTimerOut.value = null;
+  });
+
+  const minimizeOpen = (item) => {
+    item.comp.component.exposed.minimizeToggle(item);
+  };
+
+  const minimizeClose = (item) => {
+    item.comp.component.exposed.close(item);
   };
 </script>
 
@@ -45,22 +72,43 @@
   <div class="task-bar flex-star" :class="`task-bar-${taskBarPosition}`">
     <div class="main" :class="taskBarIconAlign">
       <i class="win iconfont icon-win" @click="$emit('systemMenuToggle')"></i>
-      <div
-        class="minimize-item"
-        @click="minimizeOpen(item)"
-        @mouseenter="minimizeHover(item)"
-        v-for="item in minimizeList"
-        :key="item[0]?.path"
-        :title="item[0]?.meta.title"
-      >
-        <component :is="item[0]?.meta.icon"></component>
-        <div class="item-num">{{ item.length }}</div>
-        <template v-if="thumbnail.length">
-          <div class="thumbnail">
-            <img v-for="url in thumbnail" :key="url" :src="url" alt="" />
-          </div>
-        </template>
-      </div>
+      <transition-group name="opacity">
+        <div
+          class="minimize-item"
+          v-for="(item, index) in minimizeList"
+          @mouseenter="minimizeHover(item, index)"
+          @mouseleave="minimizeHoverOut"
+          :key="item[0]?.path"
+        >
+          <component :is="item[0]?.meta.icon"></component>
+          <div class="item-num">{{ item.length }}</div>
+          <transition name="opacity">
+            <template
+              v-if="thumbnail.length === item.length && currentIndex === index"
+            >
+              <div class="thumbnail">
+                <div
+                  class="thumbnail-item"
+                  v-for="(url, index) in thumbnail"
+                  :key="url"
+                  @click="minimizeOpen(item[index])"
+                >
+                  <div class="thumbnail-item-title flex-between">
+                    <div>{{ item[0].meta?.title }}</div>
+                    <span
+                      @click.stop="minimizeClose(item[index])"
+                      title="关闭窗口"
+                    >
+                      ×
+                    </span>
+                  </div>
+                  <img :src="url" />
+                </div>
+              </div>
+            </template>
+          </transition>
+        </div>
+      </transition-group>
     </div>
     <div class="right flex-star">
       <div class="battery" :title="`${battery.level * 100}%`">
@@ -112,11 +160,41 @@
         align-items: center;
         position: relative;
         .thumbnail {
-          position: absolute;
-          bottom: -70px;
+          width: 210px;
           display: flex;
-          img {
-            height: 70px;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          padding-top: 10px;
+          bottom: -100px;
+          left: -95px;
+          .thumbnail-item {
+            padding: 0 5px 5px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 4px;
+            .thumbnail-item-title {
+              font-size: 12px;
+              color: #333;
+              line-height: 20px;
+              border-bottom: 1px solid #eee;
+              span {
+                font-size: 16px;
+                &:hover {
+                  color: red;
+                }
+              }
+            }
+
+            img {
+              width: 100px;
+              height: 70px;
+              border-radius: 4px;
+            }
+          }
+          & .thumbnail-item:nth-child(2) {
+            margin-left: 10px;
           }
         }
         i {
