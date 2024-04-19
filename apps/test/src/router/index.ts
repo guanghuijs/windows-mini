@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { menus } from '@app/router/layout';
 import { Desktop, Dashboard, Login } from '@packages/layout';
 import type { CreateWindowOptions } from '@packages/types/layout';
+import { authRoutes } from '@packages/utils';
 
 const routes: Array<CreateWindowOptions> = [
   {
@@ -33,5 +34,5 @@ const routes: Array<CreateWindowOptions> = [
 
 export default createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes: authRoutes(routes),
 });

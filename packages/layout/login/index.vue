@@ -17,7 +17,7 @@
 
   const login = function (e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      router.replace('/desktop');
+      router.push('/desktop');
     }
   };
 </script>
