@@ -24,6 +24,10 @@
       : props.options.children && props.options.children[0].path
   );
 
+  watch(activeKey, (value) => {
+    console.log(value);
+  });
+
   // 动态组件计算
   const component = computed(() => {
     const current = props.options.children?.find(
