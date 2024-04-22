@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { nextTick, onMounted, onUnmounted, ref } from 'vue';
+  import { onMounted, onUnmounted, ref } from 'vue';
   import { useDateFormat, useNow } from '@vueuse/core';
   import { getBattery } from '../../utils';
   import { useDesktopStoreRefs } from '../../store';

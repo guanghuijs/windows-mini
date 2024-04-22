@@ -1,3 +1,5 @@
+<script lang="ts" setup></script>
+
 <template>
   <router-view v-slot="{ Component }">
     <Transition name="bounce" mode="out-in">

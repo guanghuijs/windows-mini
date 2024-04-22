@@ -2,7 +2,7 @@ import { type Component, h } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import { MenuOption, NIcon } from 'naive-ui';
 import { CreateWindowOptions } from '@packages/types/layout';
-import { log } from 'echarts/types/src/util/log';
+import { getAccessToken } from './token';
 
 export function mapRouter(routes: RouteRecordRaw[]): MenuOption[] {
   return routes?.map((router: RouteRecordRaw) => ({
@@ -39,11 +39,14 @@ function deepAuth(routes: array<RouteRecordRaw | CreateWindowOptions>) {
       deepAuth(item.children);
     } else {
       item.beforeEnter = (to, from, next) => {
-        if (routeWhiteList.includes(to.path)) {
+        if (routeWhiteList.includes(to.path) || getAccessToken()) {
+          next();
+        } else {
+          next('/login');
         }
       };
     }
   });
 }
 
-const routeWhiteList: string[] = [];
+const routeWhiteList: string[] = ['/login'];

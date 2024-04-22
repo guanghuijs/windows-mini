@@ -23,7 +23,7 @@ const plugInTestingRouter: CreateWindowOptions = {
         style: {
           border: 'none',
         },
-        src: 'https://guanghuijs.gitee.io/gh-blogs/',
+        src: 'https://guanghuijs.gitee.io/blogs/',
       }),
   }),
 };

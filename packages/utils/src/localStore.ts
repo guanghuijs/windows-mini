@@ -1,6 +1,3 @@
-import type { Ref } from 'vue';
-import { ref, watch } from 'vue';
-
 import type { DesktopStore } from '@packages/types/layout';
 
 export function setLocalStore(key: string, value: any) {
