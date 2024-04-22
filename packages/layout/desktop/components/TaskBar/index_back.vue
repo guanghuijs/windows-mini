@@ -26,14 +26,46 @@
     timer.value = null;
   });
 
-  const minimizeHover = async (minimize, index: number) => {
-    console.log(minimize[0].el);
-    const canvas = await html2canvas(
-      minimize[0].el.querySelector('.vdr-container')
-    );
-    console.log(canvas.toDataURL('image/jpeg', 1.0));
+  const thumbnail = ref<string[]>([]);
+  const currentIndex = ref(-1);
+  const isHover = ref(false);
+  const hoverTimerOut = ref();
+
+  const minimizeHover = (minimize, index: number) => {
+    currentIndex.value = index;
+    thumbnail.value = [];
+    clearTimeout(hoverOutTimeout);
+    hoverTimerOut.value = setTimeout(() => {
+      minimize.forEach(async (item) => {
+        console.log(item);
+        const canvas = await html2canvas(
+          item.el.querySelector('.vdr-container')
+        );
+        thumbnail.value.push(canvas.toDataURL('image/jpeg', 1.0));
+      });
+    }, 500);
   };
-  const minimizeHoverOut = () => {};
+
+  const hoverOutTimeout = ref();
+  const minimizeHoverOut = () => {
+    clearTimeout(hoverOutTimeout.value);
+    hoverOutTimeout.value = setTimeout(() => {
+      thumbnail.value = [];
+    }, 10000);
+  };
+  onUnmounted(() => {
+    clearTimeout(hoverOutTimeout.value);
+    clearTimeout(hoverTimerOut.value);
+    hoverTimerOut.value = null;
+  });
+
+  const minimizeOpen = (item) => {
+    item.comp.component.exposed.minimizeToggle(item);
+  };
+
+  const minimizeClose = (item) => {
+    item.comp.component.exposed.close(item);
+  };
 </script>
 
 <template>
@@ -50,6 +82,31 @@
         >
           <component :is="item[0]?.meta.icon"></component>
           <div class="item-num">{{ item.length }}</div>
+          <transition name="opacity">
+            <template
+              v-if="thumbnail.length === item.length && currentIndex === index"
+            >
+              <div class="thumbnail">
+                <div
+                  class="thumbnail-item"
+                  v-for="(url, index) in thumbnail"
+                  :key="url"
+                  @click="minimizeOpen(item[index])"
+                >
+                  <div class="thumbnail-item-title flex-between">
+                    <div>{{ item[0].meta?.title }}</div>
+                    <span
+                      @click.stop="minimizeClose(item[index])"
+                      title="关闭窗口"
+                    >
+                      ×
+                    </span>
+                  </div>
+                  <img :src="url" />
+                </div>
+              </div>
+            </template>
+          </transition>
         </div>
       </transition-group>
     </div>
