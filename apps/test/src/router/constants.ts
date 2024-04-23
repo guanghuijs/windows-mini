@@ -3,4 +3,5 @@ export enum ModuleOrderNo {
   PLUGIN,
   BLOGS,
   ABOUT,
+  DEMO,
 }
