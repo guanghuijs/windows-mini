@@ -2,8 +2,9 @@ import { render, h, unref } from 'vue';
 import type { CreateWindowOptions } from '@packages/types/layout';
 import Window from './index.vue';
 import { useDesktopStore, useDesktopStoreRefs } from '../../store';
+import html2canvas from 'html2canvas';
 
-export function createWindow(
+export async function createWindow(
   options: CreateWindowOptions,
   defaultView?: string
 ) {
@@ -36,7 +37,14 @@ export function createWindow(
     windowPoint: unref(windowPoint),
   });
   render(win, document.querySelector(`div[winid=${winId}]`)!);
+  const canvas = await html2canvas(div.querySelector('.vdr-container'));
   div.classList.add('window-id');
-  const useOptions = { ...options, el: div, winId, comp: win };
+  const useOptions = {
+    ...options,
+    el: div,
+    winId,
+    comp: win,
+    thumbnail: canvas.toDataURL('image/jpeg', 1.0),
+  };
   addMinimizeList(useOptions);
 }

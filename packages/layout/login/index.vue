@@ -17,7 +17,11 @@
 
   const login = function (e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      router.replace('/desktop');
+      localStorage.setItem(
+        'WIN_MINI_0.0.1_app_store',
+        JSON.stringify({ accessToken: '66666' })
+      );
+      router.push('/desktop');
     }
   };
 </script>

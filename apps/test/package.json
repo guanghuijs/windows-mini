@@ -1,5 +1,5 @@
 {
-  "name": "windows-mini",
+  "name": "testapp",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port 1314 --host",
@@ -25,6 +25,7 @@
     "@packages/static": "workspace:*",
     "@packages/types": "workspace:*",
     "@packages/utils": "workspace:*",
+    "@packages/components": "workspace:*",
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/mockjs": "^1.0.7",
     "@types/node": "^16.11.56",

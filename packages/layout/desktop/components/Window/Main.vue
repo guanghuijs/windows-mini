@@ -23,20 +23,27 @@
       ? props.defaultView
       : props.options.children && props.options.children[0].path
   );
+
+  watch(activeKey, (value) => {
+    console.log(value);
+  });
+
+  // 动态组件计算
   const component = computed(() => {
     const current = props.options.children?.find(
       (r) => r.path === activeKey.value
     );
     return current?.component;
   });
+
+  // 左侧菜单收展
   const collapsed = ref(false);
   const menuOptions = computed<MenuOption[]>(() => {
     return mapRouter(props.options?.children);
   });
-  const handleUpdateValue = (e) => {
-    console.log(e);
-  };
+  const handleUpdateValue = (e) => {};
 
+  // 主题
   const themeOverrides = ref<GlobalThemeOverrides>({
     common: {
       primaryColor: unref(primaryColor),
@@ -44,6 +51,7 @@
     },
   });
 
+  // 监听主题切换
   watch(primaryColor, (value) => {
     themeOverrides.value = {
       common: {
